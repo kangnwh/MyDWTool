@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% set active_page = "table_index" %}
+{% block title %}Table{% endblock %}
+
+{% block content %}
+Table Demo
+    <table class="table">
+    <thead>
+        <tr>
+{#            <th>{{ data.index.name }}</th>#}
+            {% for col_name in data.columns %}
+                <th>{{ col_name }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+{#        {% for row in data.ix[:data.index.__len__()] %}#}
+        {% for row in data.values  %}
+           <tr>
+                {% for value in row %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+
+                <td></td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+{% endblock %}

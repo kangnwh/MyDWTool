@@ -1,0 +1,7 @@
+lxml
+numpy
+pandas
+tushare
+flask
+flask-login
+pandas

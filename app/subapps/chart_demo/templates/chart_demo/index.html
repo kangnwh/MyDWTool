@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% set active_page = "chart_index" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+    <script src="{{ url_for('chartRoute.static', filename='echarts.min.js') }}"></script>
+{% endblock head %}
+
+{% block content %}
+    {% include 'chart_demo/son.html'  %}
+{% endblock %}
+{% block script %}
+
+<script>
+    {{ script|safe }}
+</script>
+{% endblock %}

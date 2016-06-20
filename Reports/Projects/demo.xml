@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+    <datasource>
+        <connectStr></connectStr>
+        <sql></sql>
+    </datasource>
+
+    <layout> <!-- 报表布局 -->
+
+        <html><![CDATA[
+        <h2>图例</h2>
+
+        <div class ="row">
+            <div id="stock1" class="col-md-6" style="height: 300px;">$chart1</div>
+            <div id="stock2" class="col-md-6" style="height: 300px;">$chart2</div>
+        </div>
+
+        ]]></html> <!-- 报表布局 HTML-->
+
+    </layout>
+    <widget type="table" id="$table1"></widget><!-- 控件s -->
+    <widget type="table" id="$table1"></widget><!-- 控件s -->
+
+</configure>
+

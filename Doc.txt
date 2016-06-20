@@ -1,0 +1,9 @@
+生成一个最简单的Line Chart:
+需要的元素：
+_title
+_toolbox
+_tooltip
+_grid
+_xAxis
+_yAxis
+_series

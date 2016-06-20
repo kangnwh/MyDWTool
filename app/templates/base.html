@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" >
+    <!-- Switch CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-switch.min.css') }}" >
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+    {% block head %}{% endblock %}
+</head>
+
+<title>商业智能Demo</title>
+
+<div class="container" >
+  <h1>商业智能Demo</h1>
+{#  <!--{% with messages = get_flashed_messages(with_categories=true) %}-->#}
+{#	  <!--{% if messages %}-->#}
+{#	    <!--<div class=flashes>-->#}
+{#	    <!--{% for category, message in messages %}-->#}
+{#	      <!--<p class="{{ category }}">{{ message }}</p>-->#}
+{#	    <!--{% endfor %}-->#}
+{#	    <!--</div>-->#}
+{#	  <!--{% endif %}-->#}
+{#	<!--{% endwith %}-->#}
+
+{% set navigation_bar = [
+    (url_for("homeRoute.index"), 'index', '首页'),
+    (url_for("chartRoute.index"), 'chart_index', 'Chart示例'),
+    (url_for("tableRoute.index"), 'table_index', 'Table示例'),
+] %}
+
+	<ul class="nav nav-pills">
+	{% for href, id, caption in navigation_bar %}
+	  <li {% if id == active_page %} class="active"{% endif
+	  %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+	{% endfor %}
+	</ul>
+	<br>
+	<br>
+  {% block content %}{% endblock %}
+</div>
+
+
+{% block script %}{% endblock %}
