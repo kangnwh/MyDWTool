@@ -2,12 +2,14 @@ from app import create_app
 from app.subapps.home.routing import homeRoute
 from app.subapps.chart_demo.routing import chartRoute
 from app.subapps.table_demo.routing import tableRoute
+from app.subapps.stock.routing import stockRoute
 from app.config import HOST,PORT
 
 DEFAULT_MODULES = (
     (homeRoute, ''),
     (chartRoute,'/chart'),
-    (tableRoute,'/table')
+    (tableRoute,'/table'),
+    (stockRoute,'/stock'),
 )
 
 app = create_app('config.py')

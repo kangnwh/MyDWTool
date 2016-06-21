@@ -17,21 +17,21 @@ def index():
     subtitle = ["恒生电子","600570"]
     today = dt.datetime.now()
     start = today + dt.timedelta(days=-90)
-    stock = ts.get_hist_data(subtitle[1],start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-    stock = stock.sort()
-    x_data = stock.index.values.tolist()
+    stock_data = ts.get_hist_data(subtitle[1], start=start.strftime('%Y-%m-%d'), end=today.strftime('%Y-%m-%d'))
+    stock_data = stock_data.sort()
+    x_data = stock_data.index.values.tolist()
     script1 = get_line_script(template_name='normal',
-                             chart_id = "stock1",
-                             title=title,
-                             subtitle=subtitle[0] + " - 收盘价",
-                             y_data= stock.close.values.tolist(),
-                             x_data=x_data)
+                              chart_id = "stock1",
+                              title=title,
+                              subtitle=subtitle[0] + " - 收盘价",
+                              y_data= stock_data.close.values.tolist(),
+                              x_data=x_data)
     script2 = get_line_script(template_name='折线面积图',
                               chart_id = "stock2",
                               title="折线面积图",
-                              subtitle=subtitle[0] + " - 换手率" ,
+                              subtitle=subtitle[0] + " - 换手率",
                               x_data = x_data,
-                              y_data =  stock.turnover.values.tolist(),
+                              y_data =  stock_data.turnover.values.tolist(),
                               series_name = "XX数据"
                               )
 
@@ -45,6 +45,6 @@ def index():
     js_package = get_echarts_package()
 
     return render_template('chart_demo/index.html',
-                           js_package=js_package,
+                           #js_package=js_package,
                            script=script1+script2+script3+script4
                            )

@@ -17,4 +17,4 @@ def index():
     stock = ts.get_hist_data(subtitle[1],start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
     stock.insert(0,stock.index.name,stock.index)
     return render_template('table_demo/index.html',data=stock)
-    #return render_template_string(html,table=table)
+    #return render_template_string(html,table=table )

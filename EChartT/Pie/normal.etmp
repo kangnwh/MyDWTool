@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+    <parameter>
+        <name>chart_id</name>
+        <desc>页面中HTML元素的ID</desc>
+    </parameter>
+    <parameter>
+        <name>title</name>
+        <desc>图表title</desc>
+    </parameter>
+    <parameter>
+        <name>subtitle</name>
+        <desc>图表的subtitle</desc>
+    </parameter>
+    <parameter>
+        <name>data_category</name>
+        <desc>分类数据项</desc>
+    </parameter>
+
+    <parameter>
+        <name>data</name>
+        <desc>数据据，[{value:12314,name:'name},...]</desc>
+    </parameter>
+
+<script>
+    <![CDATA[
+echarts.init(document.getElementById('$chart_id')).setOption(option = {
+    title : {
+        text: '$title',
+        subtext: '$subtitle',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        bottom:"10%",
+        data: $data_category
+    },
+    series : [
+        {
+            name: '$title',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:$data,
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+});
+    ]]>
+</script>
+</configure>
+
