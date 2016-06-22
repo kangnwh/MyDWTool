@@ -35,9 +35,9 @@ echarts.init(document.getElementById('$chart_id')).setOption(option = {
         formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
     legend: {
-        orient: 'vertical',
-        left: 'left',
-        bottom:"10%",
+        orient: 'horizontal',
+        left: 'center',
+        bottom:"10",
         data: $data_category
     },
     series : [

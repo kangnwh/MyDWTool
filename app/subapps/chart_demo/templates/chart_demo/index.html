@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% set active_page = "chart_index" %}
 {% block title %}Home{% endblock %}
-{% block head %}
+
+
+{% block page %}
+    {{ super() }}
+    {% include 'chart_demo/Line.html' %}
+{% endblock %}
+
+{% block script_src %}
+    {{ super() }}
     <script src="{{ url_for('chartRoute.static', filename='echarts.min.js') }}"></script>
-{% endblock head %}
+{% endblock script_src %}
 
-{% block content %}
-    {% include 'chart_demo/Line.html'  %}
-{% endblock %}
-
-{% block script %}
-    {{ script|safe }}
-{% endblock %}
+{% block script_code %}
+        {{ script|safe }}
+{% endblock script_code %}

@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% set active_page = "index" %}
+
+
 {% block title %}Home{% endblock %}
-{% block head %}
 
-{% endblock head %}
-
-{% block content %}
+{% block page %}
+    {{ super() }}
     {% include 'home/son.html'  %}
 {% endblock %}
 {% block script %}
-
+    {{ super() }}
+    {{ script }}
 {% endblock script %}

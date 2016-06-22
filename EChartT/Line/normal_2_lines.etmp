@@ -60,7 +60,7 @@ echarts.init(document.getElementById('$chart_id')).setOption(option = {
         xAxis: {
             type: 'category',
             data: $x_data,
-            axisLabel: {formatter:'{value}%'},
+            axisLabel: {formatter:'{value}'},
             splitLine: {
                 show: false
             },
