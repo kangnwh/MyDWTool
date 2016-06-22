@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+    <parameter>
+        <name>chart_id</name>
+        <desc>页面中HTML元素的ID</desc>
+    </parameter>
+    <parameter>
+        <name>title</name>
+        <desc>图表title</desc>
+    </parameter>
+    <parameter>
+        <name>subtitle</name>
+        <desc>图表的subtitle</desc>
+    </parameter>
+    <parameter>
+        <name>x_data</name>
+        <desc>X轴数据</desc>
+    </parameter>
+    <parameter>
+        <name>y_data</name>
+        <desc>Y轴数据</desc>
+    </parameter>
+<script>
+    <![CDATA[
+echarts.init(document.getElementById('$chart_id')).setOption(option = {
+        title: {
+            text: '$title',
+            subtext: '$subtitle',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter:"{b}:<br />{c}元"
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: $x_data,
+            axisLabel: {formatter:'{value}'},
+            splitLine: {
+                show: false
+            },
+            boundaryGap: false
+        },
+        yAxis: {
+            axisLabel:{formatter:'{value}'},
+            splitNumber: 3,
+            splitLine: {
+                show: false
+            }
+        },
+        series: [ {
+            name:"customer",
+            type: 'line',
+            data: $y_data,
+            hoverAnimation: false,
+            symbolSize: 6,
+            itemStyle: {
+                normal: {
+                    color: '#c23531'
+                }
+            },
+            showSymbol: false
+        }]
+    });
+    ]]>
+</script>
+</configure>
+
