@@ -1,14 +1,22 @@
 from flask_wtf import Form
 from wtforms import StringField
 from wtforms.validators import DataRequired, ValidationError
-import re,tushare as ts
+import re
+from app.db_info import Session
+
+def stock_exist_valid(code):
+    sql = "select code,name from [stock].[comp_basic] where code='{code}'".format(code=code)
+    s = Session()
+    r = s.execute(sql).fetchall()
+    return r.__len__() > 0
+
+
 
 def stock_code_validator(form,field):
         if not re.match(r'^\d{6}$',field.data) :
             raise ValidationError("不是有效的股票代码:请输入有效的6位股票代码")
         else:
-            all = ts.get_stock_basics()
-            if not field.data in all.index:
+            if not stock_exist_valid(field.data):
                 raise ValidationError("不是有效的股票代码:请输入有效的6为股票代码")
 
 class StockCode(Form):

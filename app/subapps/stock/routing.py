@@ -1,24 +1,23 @@
  # -*- coding: utf-8 -*-
-from flask import Blueprint,url_for,request
-from flask import render_template,render_template_string
-from EChartT import get_line_script,get_echarts_package,\
-    generate_pie_data,get_pie_script
+from flask import Blueprint,request
+from flask import render_template
+from BI.EChartT import get_line_script,get_pie_script
 from .forms.code_select import StockCode
-import datetime as dt
+
 from .templates_funcs import get_index_data
-import tushare as ts#TODO the source should be redesigned for esay-change
+
 
 stockRoute = Blueprint('stockRoute', __name__,
                      template_folder='templates', static_folder='static')
+
 
 
 @stockRoute.route('/', methods=['GET', 'POST'])
 def index():
     code_form = StockCode()
     if request.method == 'GET':
-        code = request.args.get('code')
+        return render_template('stock/index_err.html',form=code_form)
 
-        #return render_template("stock/index.html",form=code_form)
     else :
         if code_form.validate_on_submit():
             code = code_form.code.data

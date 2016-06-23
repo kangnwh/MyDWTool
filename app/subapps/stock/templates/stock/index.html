@@ -39,7 +39,7 @@
         </br></br></br>
             <div class="col-md-6">
                 <ul class="list-group">
-                  <li class="list-group-item">股票代码:<span class="sv btn label label-primary ">{{ stock_baisc.name }}</span></li>
+                  <li class="list-group-item">股票代码:<span class="sv btn label label-primary ">{{ stock_baisc['code'] }}</span></li>
                   <li class="list-group-item">股票名称:<span class="sv label label-primary ">{{ stock_baisc['name'] }}</span></li>
                   <li class="list-group-item">价格变动:<span class="sv label {{ 'label-success' if stock_data.ix[0]['price_change'] < 0  else 'label-danger' }}">{{ stock_data.ix[0]['price_change'] }}</span></li>
                   <li class="list-group-item">10日均价:<span class="sv label label-default">{{ stock_data.ix[0]['ma10'] }}</span></li>

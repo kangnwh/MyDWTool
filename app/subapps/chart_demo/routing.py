@@ -1,7 +1,7 @@
  # -*- coding: utf-8 -*-
 from flask import Blueprint
 from flask import render_template
-from EChartT import get_line_script,get_echarts_package
+from BI.EChartT import get_line_script,get_echarts_package
 import tushare as ts
 import pandas as pd
 import datetime as dt

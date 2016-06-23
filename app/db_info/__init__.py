@@ -1,14 +1,16 @@
- # -*- coding: utf-8 -*-
-import sqlalchemy
-
-DB_HOST = ''
-PORT = 1
-USERID = ''
-PASSWORD= ''
-DB_NAME= ''
+import sqlalchemy as sa
+from sqlalchemy.orm import sessionmaker
 
 
-#target_conn = pymssql.connect(host =TARGET_DB_HOST, database =TARGET_DB_NAME, user=TARGET_USERID, password=TARGET_PASSWORD)
+TARGET_DB_HOST = '192.168.0.117'
+TARGET_PORT = 1433
+TARGET_USERID = 'biuser'
+TARGET_PASSWORD= 'bi@2016'
+TARGET_DB_NAME= 'stock'
+TARGET_SCHEMA='stock'
 
-source_conn_str=(('mssql+pymssql://%s:%s@%s:%s/%s?charset=utf8') % (USERID,PASSWORD,DB_HOST,PORT,DB_NAME))
-source_engine = sqlalchemy.create_engine(source_conn_str)
+connect_str =(('mssql+pymssql://%s:%s@%s:%s/%s?charset=utf8') % (TARGET_USERID,TARGET_PASSWORD,TARGET_DB_HOST,TARGET_PORT,TARGET_DB_NAME))
+
+engine = sa.create_engine(connect_str)
+
+Session = sessionmaker(bind=engine)

@@ -12,7 +12,7 @@
       <h1>商业智能Demo</h1>
     {% set navigation_bar = [
         (url_for("homeRoute.index"), 'index', '首页'),
-        (url_for("stockRoute.index",_method='GET',code='000001'), 'stock_index', '股票示例'),
+        (url_for("stockRoute.index",_method='POST',code='000001'), 'stock_index', '股票示例'),
         (url_for("chartRoute.index"), 'chart_index', 'Chart示例'),
         (url_for("tableRoute.index"), 'table_index', 'Table示例'),
     ] %}
