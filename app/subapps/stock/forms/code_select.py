@@ -5,6 +5,8 @@ import re
 from app.db_info import Session
 
 def stock_exist_valid(code):
+    if(code in ('sz','sh')):
+        return True
     sql = "select code,name from [stock].[comp_basic] where code='{code}'".format(code=code)
     s = Session()
     r = s.execute(sql).fetchall()
@@ -13,7 +15,7 @@ def stock_exist_valid(code):
 
 
 def stock_code_validator(form,field):
-        if not re.match(r'^\d{6}$',field.data) :
+        if (not re.match(r'^\d{6}$',field.data)) and (field.data not in ('sz','sh')) :
             raise ValidationError("不是有效的股票代码:请输入有效的6位股票代码")
         else:
             if not stock_exist_valid(field.data):
