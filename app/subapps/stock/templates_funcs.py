@@ -1,7 +1,9 @@
-import tushare as ts
 import datetime as dt
-from BI.EChartT import  generate_pie_data
+
 import pandas as pd
+import tushare as ts
+
+from BI.EChartT import generate_pie_data
 from app.db_info import Session,engine
 
 
@@ -57,7 +59,7 @@ def get_one_stock_all(code,start,end):
       ,[v_ma20]
       ,[turnover]
       ,[date]
-  FROM [stock].[stock_hist] where code='{code} and date between {start} and {end}'
+  FROM [stock].[stock_hist] where code='{code}' and date between '{start}' and '{end}'
     """.format(code=code,start=start,end=end)
     df = run_sql_via_pandas(sql)
     return df

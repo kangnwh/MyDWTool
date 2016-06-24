@@ -1,14 +1,13 @@
  # -*- coding: utf-8 -*-
-from flask import Blueprint,request
-from flask import render_template
-from BI.EChartT import get_line_script,get_pie_script
-from .forms.code_select import StockCode
+ from flask import Blueprint, request
+ from flask import render_template
 
-from .templates_funcs import get_index_data
+ from BI.EChartT import get_line_script, get_pie_script
+ from .forms.code_select import StockCode
+ from .templates_funcs import get_index_data
 
-
-stockRoute = Blueprint('stockRoute', __name__,
-                     template_folder='templates', static_folder='static')
+ stockRoute = Blueprint('stockRoute', __name__,
+                        template_folder='templates', static_folder='static')
 
 
 
