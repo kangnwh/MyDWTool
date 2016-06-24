@@ -59,7 +59,7 @@ def get_one_stock_all(code,start,end):
       ,[v_ma20]
       ,[turnover]
       ,[date]
-  FROM [stock].[stock_hist] where code='{code}' and date between '{start}' and '{end}'
+  FROM [stock].[stock_hist] where code='{code}' and date between '{start}' and '{end}' order by date
     """.format(code=code,start=start,end=end)
     df = run_sql_via_pandas(sql)
     return df
@@ -75,13 +75,13 @@ def get_index_data(code):
     start = today + dt.timedelta(days=-90)
     #stock_90 = ts.get_hist_data(code,start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
     stock_90 = get_one_stock_all(code,start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-    stock_data = stock_90.head(2).copy()
-    stock_90 = stock_90.sort_index(ascending=True)
+    stock_data = stock_90.tail(2).sort("date",ascending=False)
+    #stock_90 = stock_90.sort_index(ascending=True)
 
     sotck_sh_90 = get_one_stock_all('sh',start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))#ts.get_hist_data('sh',start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-    sotck_sh_90 = sotck_sh_90.sort_index(ascending=True)
+    #sotck_sh_90 = sotck_sh_90.sort_index(ascending=True)
 
-    x_data = stock_90.index.values.tolist()
+    x_data = stock_90.date.values.tolist()
     y_data0 = stock_90.p_change.values.tolist()
     y_data1 = sotck_sh_90.p_change.values.tolist()
 

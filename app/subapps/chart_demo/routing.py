@@ -1,9 +1,9 @@
  # -*- coding: utf-8 -*-
 import datetime as dt
-
 import tushare as ts
 from flask import Blueprint
 from flask import render_template
+from app.subapps.stock.models import templates_funcs as tf
 
 from BI.EChartT import get_line_script
 
@@ -18,9 +18,9 @@ def index():
     subtitle = ["恒生电子","600570"]
     today = dt.datetime.now()
     start = today + dt.timedelta(days=-90)
-    stock_data = ts.get_hist_data(subtitle[1], start=start.strftime('%Y-%m-%d'), end=today.strftime('%Y-%m-%d'))
-    stock_data = stock_data.sort()
-    x_data = stock_data.index.values.tolist()
+    stock_data = tf.get_one_stock_all(subtitle[1], start=start.strftime('%Y-%m-%d'), end=today.strftime('%Y-%m-%d')) #ts.get_hist_data(subtitle[1], start=start.strftime('%Y-%m-%d'), end=today.strftime('%Y-%m-%d'))
+    #stock_data = stock_data.sort()
+    x_data = stock_data.date.values.tolist()
     script1 = get_line_script(template_name='normal',
                               chart_id = "stock1",
                               title=title,

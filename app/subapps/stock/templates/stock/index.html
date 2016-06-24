@@ -33,7 +33,7 @@
 {#  <button type="submit" class="btn btn-default">Submit</button>#}
 {#</form>#}
 {#</div>#}
-<h3>今日信息</h3>
+<h3>信息日期 : <kbd>{{ stock_data.iloc[0]['date'] }}</kbd></h3>
 <div class ="row">
     <div id="table1" class="col-md-6" style="height: 300px;"> <!-- 股票基本信息 -->
         </br></br></br>
@@ -41,18 +41,20 @@
                 <ul class="list-group">
                   <li class="list-group-item">股票代码:<span class="sv btn label label-primary ">{{ stock_baisc['code'] }}</span></li>
                   <li class="list-group-item">股票名称:<span class="sv label label-primary ">{{ stock_baisc['name'] }}</span></li>
-                  <li class="list-group-item">价格变动:<span class="sv label {{ 'label-success' if stock_data.ix[0]['price_change'] < 0  else 'label-danger' }}">{{ stock_data.ix[0]['price_change'] }}</span></li>
-                  <li class="list-group-item">10日均价:<span class="sv label label-default">{{ stock_data.ix[0]['ma10'] }}</span></li>
-                  <li class="list-group-item">20日均价:<span class="sv label label-default">{{ stock_data.ix[0]['ma20'] }}</span></li>
+                  <li class="list-group-item">价格变动:<span class="sv label {{ 'label-success' if stock_data.iloc[0]['price_change'] < 0  else 'label-danger' }}">{{ stock_data.iloc[0]['price_change'] }}</span></li>
+                  <li class="list-group-item">10日均价:<span class="sv label label-default">{{ stock_data.iloc[0]['ma10'] }}</span></li>
+                  <li class="list-group-item">20日均价:<span class="sv label label-default">{{ stock_data.iloc[0]['ma20'] }}</span></li>
                 </ul>
             </div>
             <div class="col-md-6">
                  <ul class="list-group">
-                  <li class="list-group-item">开盘价:<span class="sv label {{ 'label-success' if stock_data.ix[0]['open'] < stock_data.ix[1]['close']  else 'label-danger' }}">{{ stock_data.ix[0]['open'] }}</span></li>
-                  <li class="list-group-item">收盘价:<span class="sv label {{ 'label-success' if stock_data.ix[0]['close'] < stock_data.ix[1]['close']  else 'label-danger' }}">{{ stock_data.ix[0]['close'] }}</span></li>
-                  <li class="list-group-item">涨跌幅:<span class="sv label {{ 'label-success' if stock_data.ix[0]['p_change'] < 0  else 'label-danger' }}">{{ stock_data.ix[0]['p_change'] }}%</span></li>
-                  <li class="list-group-item">10日均量:<span class="sv label label-default">{{ stock_data.ix[0]['v_ma10'] }}</span></li>
-                  <li class="list-group-item">20日均量:<span class="sv label label-default">{{ stock_data.ix[0]['v_ma20'] }}</span></li>
+                  <li class="list-group-item">开盘/昨收价:
+                      <span class="sv label {{ 'label-success' if stock_data.iloc[0]['open'] < stock_data.iloc[1]['close']  else 'label-danger' }}">{{ stock_data.iloc[0]['open'] }} / {{ stock_data.iloc[1]['close'] }}</span>
+                  </li>
+                  <li class="list-group-item">收盘价:<span class="sv label {{ 'label-success' if stock_data.iloc[0]['close'] < stock_data.iloc[0]['open']  else 'label-danger' }}">{{ stock_data.iloc[0]['close'] }}</span></li>
+                  <li class="list-group-item">涨跌幅:<span class="sv label {{ 'label-success' if stock_data.iloc[0]['p_change'] < 0  else 'label-danger' }}">{{ stock_data.iloc[0]['p_change'] }}%</span></li>
+                  <li class="list-group-item">10日均量:<span class="sv label label-default">{{ stock_data.iloc[0]['v_ma10'] }}</span></li>
+                  <li class="list-group-item">20日均量:<span class="sv label label-default">{{ stock_data.iloc[0]['v_ma20'] }}</span></li>
                 </ul>
 
             </div>
@@ -60,13 +62,12 @@
     <div id="chart1" class="col-md-6" style="height: 300px;"></div> <!-- 图片展示（近90天走势，大盘走势） -->
 </div>
 
-
 <div class ="row">
     <div class="col-md-6" style="height: 300px;"><!-- 2个小饼图 -->
-        <div id="chart2" class="col-md-6" style="height: 300px;">11111111111111111111111111111111</div> <!-- 新浪股吧简单语情 -->
-        <div id="chart3" class="col-md-6" style="height: 300px;">11111111111111111111111111111111</div> <!-- 新闻简单语情 -->
+        <div id="chart2" class="col-md-6" style="height: 300px;"></div> <!-- 新浪股吧简单语情 -->
+        <div id="chart3" class="col-md-6" style="height: 300px;">新浪股吧简单语情饼图Pending...</div> <!-- 新闻简单语情 -->
     </div>
-    <div id="chart4" class="col-md-6" style="height: 300px;">11111111111111111111111111111111</div> <!-- 大笔交易饼图 -->
+    <div id="chart4" class="col-md-6" style="height: 300px;">现金流饼图Pending...</div> <!-- 大笔交易饼图 -->
 </div>
 
 <div class ="row">

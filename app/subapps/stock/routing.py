@@ -3,8 +3,8 @@ from flask import Blueprint, request
 from flask import render_template
 
 from BI.EChartT import get_line_script, get_pie_script
+from app.subapps.stock.models.templates_funcs import get_index_data
 from .forms.code_select import StockCode
-from .templates_funcs import get_index_data
 
 stockRoute = Blueprint('stockRoute', __name__,
                     template_folder='templates', static_folder='static')

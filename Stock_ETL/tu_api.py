@@ -18,8 +18,8 @@ def load_daily_data(session, begin_code="000000"):
     logger.info("##########################################")
 
     # 获得上市公司的基本数据
-    code_list = load_comp_basic(session)
-    code_list = code_list[code_list.index >= begin_code]
+    code_list = get_all_code_basic(session,begin_code)#load_comp_basic(session)
+    #code_list = code_list[code_list.index >= begin_code]
 
     # 添加上证深证指数
     s = pd.DataFrame(index=['sh','sz'])
@@ -32,15 +32,22 @@ def load_daily_data(session, begin_code="000000"):
     max_date_df = pd.read_sql(max_date_sql, engine, columns=['code', 'max_date'])
 
     # 获得所有股票历史信息
-    for code in code_list.index:
-        logger.info(("Load data of code : %s ") % (code))
+    for index in code_list.index:
+        row = code_list.iloc[index]
+        logger.info(("Load data of code : %s ") % (row.code))
+        logger.info(("Time to market : {timeToMarket} ").format(timeToMarket=row.timeToMarket))
+
+        if not row.timeToMarket :
+            logger.info(("Code : %s has not yet listed ") % (row.code))
+            continue
+
         try:
-            max_date = max_date_df[max_date_df.code == code].max_date.values[0]
+            max_date = max_date_df[max_date_df.code == row.code].max_date.values[0]
             max_date = max_date if isinstance(max_date, dt.date) or isinstance(max_date,
                                                                                dt.datetime) else dt.datetime.strptime(
                     max_date, "%Y-%m-%d")
         except Exception as e:
-            logger.info(("Code : %s has no history data ") % (code))
+            logger.info(("Code : %s has no history data ") % (row.code))
             max_date = dt.date(1900, 1, 1)
 
 
@@ -48,27 +55,27 @@ def load_daily_data(session, begin_code="000000"):
         next_date_str = next_date_py.strftime('%Y-%m-%d')
 
         # 从Tushare中拿数据
-        one_stock = ts.get_hist_data(code, start=next_date_str)
+        one_stock = ts.get_hist_data(row.code, start=next_date_str)
         logger.info(("Max date in existing DW is : %s ") % (next_date_str))
 
         try:
-            if code in ('sh', 'sz'):
+            if row.code in ('sh', 'sz'):
                 one_stock['turnover'] = 0
             one_stock['date'] = one_stock.index
-            logger.info(("Code : %s has %d rows need to be inserted") % (code, one_stock.index.size))
+            logger.info(("Code : %s has %d rows need to be inserted") % (row.code, one_stock.index.size))
         except Exception as e:
-            logger.error(("Code : %s has something wrong from date %s ") % (code, next_date_str))
+            logger.error(("Code : %s has something wrong from date %s ") % (row.code, next_date_str))
             break
 
         one_stock = one_stock.reset_index(drop=True)
-        one_stock.insert(0, 'code', code, allow_duplicates=True)
+        one_stock.insert(0, 'code', row.code, allow_duplicates=True)
 
         try:
             one_stock.to_sql('stock_hist', engine, index = False, schema='stock', if_exists='append')
-            logger.info(("Code : %s updated successfully ") % (code))
+            logger.info(("Code : %s updated successfully ") % (row.code))
             logger.info("##########################################")
         except Exception as e:
-            logger.error(("Code : %s has something wrong for inserting %s ") % (code, next_date_str))
+            logger.error(("Code : %s has something wrong for inserting %s ") % (row.code, next_date_str))
             break
         finally:
             session.close()
@@ -107,3 +114,8 @@ def load_comp_basic(session):
         return pd.DataFrame()
     finally:
         session.close()
+
+def get_all_code_basic(session,begin_code="000000"):
+    sql = "select * from [stock].[comp_basic] where code>={code}".format(code=begin_code)
+    df = pd.read_sql(sql,session.get_bind())
+    return df
