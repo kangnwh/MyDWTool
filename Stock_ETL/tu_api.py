@@ -22,8 +22,8 @@ def load_daily_data(session, begin_code="000000"):
     #code_list = code_list[code_list.index >= begin_code]
 
     # 添加上证深证指数
-    s = pd.DataFrame(index=['sh','sz'])
-    code_list = code_list.append(s)
+    s = pd.DataFrame(['sh','sz'],columns=["code"])
+    code_list = code_list.append(s,ignore_index=True)
 
     # 获得数据库中所有股票的max date
     max_date_sql = "select code,max(date)  as max_date from stock.stock_hist group by code"
@@ -37,11 +37,12 @@ def load_daily_data(session, begin_code="000000"):
         logger.info(("Load data of code : %s ") % (row.code))
         logger.info(("Time to market : {timeToMarket} ").format(timeToMarket=row.timeToMarket))
 
-        if not row.timeToMarket :
+        if (not row.timeToMarket) and (row.code not in ('sh','sz')):
             logger.info(("Code : %s has not yet listed ") % (row.code))
             continue
 
         try:
+            print(row.code)
             max_date = max_date_df[max_date_df.code == row.code].max_date.values[0]
             max_date = max_date if isinstance(max_date, dt.date) or isinstance(max_date,
                                                                                dt.datetime) else dt.datetime.strptime(

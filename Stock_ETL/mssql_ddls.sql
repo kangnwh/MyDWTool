@@ -3,7 +3,7 @@ drop table stock.stock_hist;
 CREATE TABLE stock.stock_hist
 (
 --  seq_in_code bigint(20) DEFAULT NULL,
-  code char(6) NOT NULL,
+  code varchar(6) NOT NULL,
   [open] decimal(8,2) DEFAULT NULL,
   high decimal(8,2) DEFAULT NULL,
   [close] decimal(8,2) DEFAULT NULL,
