@@ -1,12 +1,13 @@
  # -*- coding: utf-8 -*-
-from flask import Blueprint
-from flask import render_template
-from BI.EChartT import get_line_script,get_echarts_package
-import tushare as ts
-import pandas as pd
-import datetime as dt
+ import datetime as dt
 
-chartRoute = Blueprint('chartRoute', __name__,
+ import tushare as ts
+ from flask import Blueprint
+ from flask import render_template
+
+ from BI.EChartT import get_line_script
+
+ chartRoute = Blueprint('chartRoute', __name__,
                      template_folder='templates', static_folder='static')
 
 
@@ -42,9 +43,7 @@ def index():
     script4 = get_line_script(template_name='动态时间轴',
                               chart_id = "stock4",
                               title='动态时间轴')
-    js_package = get_echarts_package()
 
     return render_template('chart_demo/index.html',
-                           #js_package=js_package,
                            script=script1+script2+script3+script4
                            )
