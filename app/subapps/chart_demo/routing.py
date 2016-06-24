@@ -1,14 +1,14 @@
  # -*- coding: utf-8 -*-
- import datetime as dt
+import datetime as dt
 
- import tushare as ts
- from flask import Blueprint
- from flask import render_template
+import tushare as ts
+from flask import Blueprint
+from flask import render_template
 
- from BI.EChartT import get_line_script
+from BI.EChartT import get_line_script
 
- chartRoute = Blueprint('chartRoute', __name__,
-                     template_folder='templates', static_folder='static')
+chartRoute = Blueprint('chartRoute', __name__,
+                 template_folder='templates', static_folder='static')
 
 
 @chartRoute.route('/', methods=['GET', 'POST'])
