@@ -8,18 +8,22 @@
 使用方法：(以调用Line/normal为例)
 
 1. 在HTML中引用`echart js`
+    
     ```HTML
     <script src="PATH_OF_echarts.min.js"></script>
     ```
 2. 在HTML中定义一个含有ID的HTML控件,例如
+    
     ```HTML
     <div id="chart" style="height:300px"></div>
     ```
 3. 在python中
+    
     ```python
     from BI.EChartT import get_line_script 
     ```
 4. 调用如下代码：
+    
     ```python
     script1 = get_line_script(template_name='normal',
                               chart_id = "chart",
