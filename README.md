@@ -63,9 +63,9 @@
 4. 修改`Stock_ETL/config.py` 中的相关配置：
 
     ```python
-        WORDCLOUD_PATH=<存放stock wordcloud图片的位置,用于前端>`，默认配置是在`app/subapps/stock/static/wordcloud
-        default_dict=<默认的分词字典>
-        exclude_words = <word cloud中要除去的字符列表>
+        WORDCLOUD_PATH=<存放stock wordcloud图片的位置,用于前端> #默认配置是在app/subapps/stock/static/wordcloud
+        default_dict= #<默认的分词字典>
+        exclude_words = #<word cloud中要除去的字符列表>
     ```
 5. 使用以下命令导入数据
 

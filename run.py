@@ -2,6 +2,7 @@ from app.manage import create_app
 
 app = create_app()
 
+
 @app.before_request
 def before_request():
     """
@@ -11,8 +12,10 @@ def before_request():
     """
     pass
 
+
 def run_app():
-    app.run(host=app.config.get("HOST","127.0.0.1"),port=app.config.get("PORT","5001"),threaded=True)
+    app.run(host=app.config.get("HOST", "127.0.0.1"), port=app.config.get("PORT", "5001"), threaded=True)
+
 
 if __name__ == '__main__':
     run_app()
