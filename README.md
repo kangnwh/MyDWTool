@@ -59,4 +59,7 @@
 - [x] flask-wtf
 - [x] flask-bootstrap
 - [x] tushare
+- [x] wordcloud
+- [x] pillow
+- [x] jieba
 

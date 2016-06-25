@@ -86,7 +86,8 @@ def get_index_data(code):
     y_data1 = sotck_sh_90.p_change.values.tolist()
 
     #新浪股吧词频
-    tf = ts.get_sina_dd(code, today.strftime('%Y-%m-%d'))
+    tf = ts.get_sina_dd(code,  stock_data.iloc[0]['date'])
+
     gf = tf.groupby('type')
     s = gf.volume.sum()
     pie_l = {x:y for x,y in s.items()}
