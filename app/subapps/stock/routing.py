@@ -25,7 +25,7 @@ def index():
 
     code = code if code else "000001"
     title = "个股 - 大盘 对比图"
-    stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,pie_l,pie_data = get_index_data(code)
+    stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,category,pie_data = get_index_data(code)
 
     word_cloud = url_for("stockRoute.static",filename="wordcloud/{code}.png".format(code=code))
 
@@ -41,7 +41,7 @@ def index():
                              chart_id="chart2",
                              title="大单交易类别比例",
                              subtitle=subtitle[0]+subtitle[1],
-                             data_category = list(pie_l.keys()),
+                             data_category = category,
                              data=pie_data)
     #新闻词频
 

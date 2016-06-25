@@ -18,6 +18,14 @@ def run_sql_via_sqlalchemy(sql):
     session.close()
     return result
 
+def get_max_date(code):
+    sql = """
+    SELECT max([date]) as date
+  FROM [stock].[stock_hist] where code='{code}'
+    """.format(code=code)
+    df = run_sql_via_sqlalchemy(sql)
+    return df[0][0]
+
 def get_basic(code):
     sql = """
     SELECT [code]
@@ -71,13 +79,14 @@ def get_index_data(code):
 
     subtitle = [stock_basic[1],code]
 
-    today = dt.datetime.now()
-    start = today + dt.timedelta(days=-90)
+    max_date = get_max_date(code)#dt.datetime.now()
+    max_date = dt.datetime.strptime(max_date,"%Y-%m-%d")
+    start = max_date + dt.timedelta(days=-90)
 
-    stock_90 = get_one_stock_all(code,start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
+    stock_90 = get_one_stock_all(code,start=start.strftime('%Y-%m-%d'),end=max_date.strftime('%Y-%m-%d'))
     stock_data = stock_90.tail(2).sort_values(by="date",ascending=False)
 
-    sotck_sh_90 = get_one_stock_all('sh',start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))#ts.get_hist_data('sh',start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
+    sotck_sh_90 = get_one_stock_all('sh',start=start.strftime('%Y-%m-%d'),end=max_date.strftime('%Y-%m-%d'))#ts.get_hist_data('sh',start=start.strftime('%Y-%m-%d'),end=max_date.strftime('%Y-%m-%d'))
 
     x_data = stock_90.date.values.tolist()
     y_data0 = stock_90.p_change.values.tolist()
@@ -86,9 +95,14 @@ def get_index_data(code):
     #大手买卖
     tf = ts.get_sina_dd(code,  stock_data.iloc[0]['date'])
 
-    gf = tf.groupby('type')
-    s = gf.volume.sum()
-    pie_l = {x:y for x,y in s.items()}
-    pie_data = generate_pie_data(pie_l)
+    if  isinstance(tf,pd.DataFrame):
+        gf = tf.groupby('type')
+        s = gf.volume.sum()
+        pie_l = {x:y for x,y in s.items()}
+        pie_data = generate_pie_data(pie_l)
+        category = list(pie_l.keys())
+    else:
+        category = ["没有数据",]
+        pie_data = "[{name:'没有数据',value:1}]"
 
-    return stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,pie_l,pie_data#,cloud_text
+    return stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,category,pie_data#,cloud_text
