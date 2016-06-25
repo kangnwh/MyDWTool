@@ -2,10 +2,11 @@ import os
 from .Common.common import render_chart
 from wordcloud import WordCloud
 import jieba
-import time
 
 BASE_PATH = os.path.split(os.path.realpath(__file__))[0]
 ECHART_JS_PACKAGE = BASE_PATH + os.sep + "echarts.min.js"
+BASE_DICT = BASE_PATH+os.sep+"WordCloud"+os.sep+"dict"+os.sep+"dict.txt"
+
 
 
 def get_line_script(template_name, **kwargs):
@@ -47,8 +48,10 @@ def pd_to_dict(df):
     pass
 
 
-def get_word_cloud(word,
-                   font_path='F:\\simheittf\\simhei.ttf',
+def get_word_cloud(word,file_name,
+                   dict = BASE_DICT,
+                   folder_path=BASE_PATH+os.sep+"WordCloud",
+                   font_path=BASE_PATH+os.sep+"WordCloud"+os.sep+"幼圆.ttf",
                    width=400,
                    height=200,
                    margin=5,
@@ -66,9 +69,12 @@ def get_word_cloud(word,
                    prefer_horizontal=prefer_horizontal,mask=mask,scale=scale,max_words=max_words,
                    stopwords=stopwords,random_state=random_state,background_color=background_color,max_font_size=max_font_size#,color_func=color_func
                 )
-    after = ' '.join(jieba.cut(word))
-    print(after)
-    file = "{BASE_PATH}{sep}WordCloud{sep}{ts}.png".format( BASE_PATH=BASE_PATH ,sep=os.sep,ts=time.time())
+    if dict:
+        jieba.load_userdict(dict)
+    after = ' '.join(jieba.cut(word,cut_all=False))
+
+    file_with_path = "{BASE_PATH}{sep}{file}".format( BASE_PATH=folder_path ,sep=os.sep,file=file_name)
     wc.generate(after)
-    wc.to_file(file)
-    return file
+    print(file_with_path)
+    wc.to_file(file_with_path)
+    return file_name

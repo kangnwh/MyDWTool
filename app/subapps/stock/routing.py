@@ -1,7 +1,6 @@
  # -*- coding: utf-8 -*-
-from flask import Blueprint, request
+from flask import Blueprint, request,url_for
 from flask import render_template
-
 from BI.EChartT import get_line_script, get_pie_script
 from app.subapps.stock.models.templates_funcs import get_index_data
 from .forms.code_select import StockCode
@@ -28,6 +27,7 @@ def index():
     title = "个股 - 大盘 对比图"
     stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,pie_l,pie_data = get_index_data(code)
 
+    word_cloud = url_for("stockRoute.static",filename="wordcloud/{code}.png".format(code=code))
 
     script1 = get_line_script(template_name='normal_2_lines',
                              chart_id = "chart1",
@@ -56,4 +56,5 @@ def index():
     return render_template('stock/index.html',form=code_form,
                                stock_baisc = stock_basic,
                                stock_data = stock_data,
-                                script = script1+script2)
+                                script = script1+script2,
+                                wordcloud=word_cloud)

@@ -32,7 +32,10 @@
                               y_data= [1,2,3,4,5],
                               x_data= [12,20,12,124,344])
     ```
-5. 将第三步中的到的结果`script1`加入到HTML的`<script>{{ script1 }}</script>`中
+5. 将第三步中的到的结果`script1`加入到HTML
+    ```HTML
+        <script>{{ script1 }}</script>
+    ```
 
 
 ## 2. 基于Bootstrap的表格生成器 ##
@@ -42,6 +45,31 @@
 >该模块用于展示上面两部分的成果，包含两个子模块
 > + Stock_ETL -> 基于Tushare的股票数据load - 落地到本地数据库.
 > + app/stock -> 前端web展示界面，通过股票代码查询，将尽量多的公司相关信息/分析结果展示在一个page上
+
+### 安装方法 ###
+1. 根据自己的主机等情况配置app/config.py
+2. 建立文件app/db_info/no_git_file.py,并定义以下数据库相关的参数：
+    ```python
+        TARGET_DB_HOST ='192.168.0.117'
+        TARGET_PORT = 1433
+        TARGET_USERID = 'user_id'
+        TARGET_PASSWORD= 'user_password'
+        TARGET_DB_NAME= 'stock'
+        TARGET_SCHEMA='stock'
+    ```
+3. 根据`Stock_ETL/mssql_ddls.sql`在自己的数据库中创建相关table.
+4. 修改`Stock_ETL/config.py` 中的相关配置：
+    ```python
+        WORDCLOUD_PATH=<存放stock wordcloud图片的位置,用于前端>`，默认配置是在`app/subapps/stock/static/wordcloud
+        default_dict=<默认的分词字典>
+        exclude_words = <word cloud中要除去的字符列表>
+    ```
+5. 使用以下命令导入数据
+    ```python
+        import Stock_ETL.backend_jobs as bj
+        bj.daily_run()
+    ```
+
 
 ## 4. 基于Pandas的简单ETL处理 ##
 >Pending

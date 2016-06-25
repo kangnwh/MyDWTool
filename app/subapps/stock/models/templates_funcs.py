@@ -73,19 +73,17 @@ def get_index_data(code):
 
     today = dt.datetime.now()
     start = today + dt.timedelta(days=-90)
-    #stock_90 = ts.get_hist_data(code,start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
+
     stock_90 = get_one_stock_all(code,start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-    stock_data = stock_90.tail(2).sort("date",ascending=False)
-    #stock_90 = stock_90.sort_index(ascending=True)
+    stock_data = stock_90.tail(2).sort_values(by="date",ascending=False)
 
     sotck_sh_90 = get_one_stock_all('sh',start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))#ts.get_hist_data('sh',start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-    #sotck_sh_90 = sotck_sh_90.sort_index(ascending=True)
 
     x_data = stock_90.date.values.tolist()
     y_data0 = stock_90.p_change.values.tolist()
     y_data1 = sotck_sh_90.p_change.values.tolist()
 
-    #新浪股吧词频
+    #大手买卖
     tf = ts.get_sina_dd(code,  stock_data.iloc[0]['date'])
 
     gf = tf.groupby('type')
@@ -93,5 +91,4 @@ def get_index_data(code):
     pie_l = {x:y for x,y in s.items()}
     pie_data = generate_pie_data(pie_l)
 
-    return stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,pie_l,pie_data
-
+    return stock_basic,subtitle,stock_data,x_data,y_data0,y_data1,pie_l,pie_data#,cloud_text
