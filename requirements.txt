@@ -10,5 +10,5 @@ flask-wtf
 flask-bootstrap
 tushare
 wordcloud
-pillow
+Pillow
 jieba
