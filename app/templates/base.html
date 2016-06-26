@@ -1,9 +1,13 @@
 {% extends "bootstrap/base.html" %}
 
+{% block head %}
+    {{ super() }}
+    {% block favicon %}<link rel="icon" href="{{ url_for("homeRoute.static",filename="icon/favicon.png") }}">{% endblock %}
+{% endblock head %}
+
 
 {% block title %}商业智能Demo{% endblock title %}
 {% block meta %}<meta charset="UTF-8">  {% endblock meta %}
-
 
 
 
