@@ -121,12 +121,12 @@ def get_all_code_basic(session,begin_code="000000"):
     return df
 
 
-def generate_wordcloud_png(session,png_path,default_dict,stopwords,max_font_size=None,begin_code="000000"):
+def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,stopwords,max_font_size=None,begin_code="000000"):
     code_basic = get_all_code_basic(session,begin_code=begin_code)
     for code in code_basic.code:
         cloud_df = ts.get_notices(code)
         all = ""
         for url in cloud_df.ix[0:1].url:
             all += ts.notice_content(url)
-        get_word_cloud(all,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size)
+        get_word_cloud(all,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size,font_path=default_word_font_ttf)
     #return all

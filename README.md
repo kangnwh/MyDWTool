@@ -10,17 +10,17 @@
 1. 在HTML中引用`echart js`
     
     ```HTML
-    <script src="PATH_OF_echarts.min.js"></script>
+        <script src="PATH_OF_echarts.min.js"></script>
     ```
 2. 在HTML中定义一个含有ID的HTML控件,例如
     
     ```HTML
-    <div id="chart" style="height:300px"></div>
+        <div id="chart" style="height:300px"></div>
     ```
 3. 在python中
     
     ```python
-    from BI.EChartT import get_line_script 
+        from BI.EChartT import get_line_script 
     ```
 4. 调用如下代码：
     
@@ -63,9 +63,11 @@
 4. 修改`Stock_ETL/config.py` 中的相关配置：
 
     ```python
-        WORDCLOUD_PATH=<存放stock wordcloud图片的位置,用于前端> #默认配置是在app/subapps/stock/static/wordcloud
-        default_dict= #<默认的分词字典>
-        exclude_words = #<word cloud中要除去的字符列表>
+        default_word_font_ttf = <字体文件ttf的路径> #word cloud所使用的字体文件。
+        '由于字体文件比较大，没有上传到github中，朋友们可以自行配置该选项'
+        wordcloud_path=<存放stock wordcloud图片的位置,用于前端> #默认配置是在app/subapps/stock/static/wordcloud
+        default_dict=<jieba分词使用的自定义字典> #<默认的分词字典>
+        exclude_words=<word cloud中不需要显示的词列表，可自行定义> #<word cloud中要除去的字符列表>
     ```
 5. 使用以下命令导入数据
 
