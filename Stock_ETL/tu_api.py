@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import datetime as dt
-import os
+import os,time
 import pandas as pd
 import tushare as ts
 from logs import get_logger
@@ -134,9 +134,11 @@ def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,s
 
 def get_url_content(url):
     i = 0
-    content = ""
-    while i <= 3 and content == "":
+    content = None
+    while i <= 3 and not content :
         content = ts.notice_content(url)
         i += 1
-    return content
+        time.sleep(3)
+
+    return content if content else ""
 
