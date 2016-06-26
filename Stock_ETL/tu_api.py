@@ -128,6 +128,15 @@ def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,s
         all = ""
         if isinstance(cloud_df,pd.DataFrame):
             for url in cloud_df.url:
-                all += ts.notice_content(url)
+                all += get_url_content(url)
         get_word_cloud(all,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size,font_path=default_word_font_ttf)
-    #return all
+
+
+def get_url_content(url):
+    i = 0
+    content = ""
+    while i <= 3 and content == "":
+        content = ts.notice_content(url)
+        i += 1
+    return content
+
