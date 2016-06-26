@@ -148,7 +148,7 @@ def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,s
 
 def get_url_content(url):
     logger = logging.getLogger("word_cloud")
-    logger.info("begin to load \n{url}".format(url = url))
+    logger.info("begin to load {url}".format(url = url))
     i = 0
     content = None
     while i <= 2 and not content :
