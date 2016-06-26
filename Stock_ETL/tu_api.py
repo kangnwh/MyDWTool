@@ -155,9 +155,16 @@ def get_url_content(url):
         logger.info("Try to load at {i} time".format(i=i))
         content = ts.notice_content(url)
         i += 1
-        if content:
+        if not content:
             logger.info("Load failed, sleep for a while and try again")
             time.sleep(2)
+    if content:
+        logger.info("load {url} successfully".format(url=url))
+        logger.info("=========================================================")
+        return content
+    else:
+        logger.error("load {url} failed and will ignore this url".format(url=url))
+        logger.info("=========================================================")
+        return ""
 
-    return content if content else ""
 
