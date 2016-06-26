@@ -135,7 +135,7 @@ def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,s
 def get_url_content(url):
     i = 0
     content = None
-    while i <= 3 and not content :
+    while i <= 4 and not content :
         content = ts.notice_content(url)
         i += 1
         time.sleep(3)
