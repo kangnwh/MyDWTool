@@ -135,6 +135,10 @@ def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,s
     code_basic = get_all_code_basic(session,begin_code=begin_code)
 
     for code in code_basic.code:
+        logger.info("##########################################")
+        logger.info("###Begin to generate for {code}###########".format(code = code))
+        logger.info("##########################################")
+        logger.info("Begin to generate for {code}".format(code = code))
         cloud_df = ts.get_notices(code)
         all = ""
         if isinstance(cloud_df,pd.DataFrame):
