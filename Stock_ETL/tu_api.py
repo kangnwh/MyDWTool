@@ -3,7 +3,7 @@ import datetime as dt
 import os,time
 import pandas as pd
 import tushare as ts
-from logs import get_logger
+from logs import get_logger,logging
 from BI.EChartT import get_word_cloud
 #from .config import default_dict,exclude_words
 
@@ -122,23 +122,42 @@ def get_all_code_basic(session,begin_code="000000"):
 
 
 def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,stopwords,max_font_size=None,begin_code="000000"):
+
+    log_file = (os.getcwd() + os.sep + "logs" + os.sep + "load_word_cloud_%s.log") % (
+    dt.datetime.now().strftime('%Y-%m-%d'))
+    logger = get_logger(log_file,'word_cloud')
+
+    logger.info('Daily word cloud generation begins')
+    logger.info("##########################################")
+
+    logger.info("Begin get basic")
+
     code_basic = get_all_code_basic(session,begin_code=begin_code)
+
     for code in code_basic.code:
         cloud_df = ts.get_notices(code)
         all = ""
         if isinstance(cloud_df,pd.DataFrame):
             for url in cloud_df.url:
                 all += get_url_content(url)
-        get_word_cloud(all,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size,font_path=default_word_font_ttf)
+        file = get_word_cloud(all,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size,font_path=default_word_font_ttf)
+        logger.info("{file} was generated successfully !".format(file = file))
+
+    logger.info("All word cloud files were generated successfully !")
 
 
 def get_url_content(url):
+    logger = logging.getLogger("word_cloud")
+    logger.info("begin to load \n{url}".format(url = url))
     i = 0
     content = None
-    while i <= 4 and not content :
+    while i <= 2 and not content :
+        logger.info("Try to load at {i} time".format(i=i))
         content = ts.notice_content(url)
         i += 1
-        time.sleep(3)
+        if content:
+            logger.info("Load failed, sleep for a while and try again")
+            time.sleep(2)
 
     return content if content else ""
 
