@@ -5,6 +5,7 @@ import pandas as pd
 import tushare as ts
 from logs import get_logger,logging
 from BI.EChartT import get_word_cloud
+from Stock_ETL.config import jieba
 #from .config import default_dict,exclude_words
 
 def load_daily_data(session, begin_code="000000"):
@@ -144,8 +145,11 @@ def generate_wordcloud_png(session,png_path,default_dict,default_word_font_ttf,s
         if isinstance(cloud_df,pd.DataFrame):
             for url in cloud_df.url:
                 all += get_url_content(url)
-        file = get_word_cloud(all,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size,font_path=default_word_font_ttf)
+        after = ' '.join(jieba.cut(all,cut_all=False))
+        file = get_word_cloud(after,file_name=code+".png",dict=default_dict,max_words=2000,stopwords=stopwords,folder_path=png_path,max_font_size=max_font_size,font_path=default_word_font_ttf)
+        logger.info("##########################################")
         logger.info("{file} was generated successfully !".format(file = file))
+        logger.info("##########################################")
 
     logger.info("All word cloud files were generated successfully !")
 
@@ -160,7 +164,7 @@ def get_url_content(url):
         content = ts.notice_content(url)
         i += 1
         if not content:
-            logger.info("Load failed, sleep for a while and try again")
+            logger.warning("Load failed, sleep for a while and try again")
             time.sleep(2)
     if content:
         logger.info("load {url} successfully".format(url=url))

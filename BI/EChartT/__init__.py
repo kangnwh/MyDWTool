@@ -1,7 +1,7 @@
 import os
 from .Common.common import render_chart
 from wordcloud import WordCloud
-import jieba
+#from Stock_ETL.config import jieba
 
 BASE_PATH = os.path.split(os.path.realpath(__file__))[0]
 ECHART_JS_PACKAGE = BASE_PATH + os.sep + "echarts.min.js"
@@ -48,7 +48,7 @@ def pd_to_dict(df):
     pass
 
 
-def get_word_cloud(word,file_name,
+def get_word_cloud(content, file_name,
                    dict = BASE_DICT,
                    folder_path=BASE_PATH+os.sep+"WordCloud",
                    font_path=BASE_PATH+os.sep+"WordCloud"+os.sep+"幼圆.ttf",
@@ -69,12 +69,12 @@ def get_word_cloud(word,file_name,
                    prefer_horizontal=prefer_horizontal,mask=mask,scale=scale,max_words=max_words,
                    stopwords=stopwords,random_state=random_state,background_color=background_color,max_font_size=max_font_size#,color_func=color_func
                 )
-    if dict:
-        jieba.load_userdict(dict)
-    after = ' '.join(jieba.cut(word,cut_all=False))
+    # if dict:
+    #     jieba.load_userdict(dict)
+    # after = ' '.join(jieba.cut(content, cut_all=False))
 
     file_with_path = "{BASE_PATH}{sep}{file}".format( BASE_PATH=folder_path ,sep=os.sep,file=file_name)
-    wc.generate(after)
+    wc.generate(content)
     print(file_with_path)
     wc.to_file(file_with_path)
     return file_name
