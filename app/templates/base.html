@@ -3,6 +3,7 @@
 {% block head %}
     {{ super() }}
     {% block favicon %}<link rel="icon" href="{{ url_for("homeRoute.static",filename="icon/favicon.png") }}">{% endblock %}
+    <link rel="stylesheet" href=" {{ url_for("homeRoute.static",filename="css/mystyle.css") }}">
 {% endblock head %}
 
 
@@ -21,11 +22,27 @@
         (url_for("tableRoute.index"), 'table_index', 'Table示例'),
     ] %}
 
-        <ul class="nav nav-pills">
-        {% for href, id, caption in navigation_bar %}
-          <li {% if id == active_page %} class="active"{% endif
-          %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
-        {% endfor %}
+        <ul class="nav nav-tabs">
+{#            {% for href, id, caption in navigation_bar %}#}
+{#              <li {% if id == active_page %} class="active"{% endif %}>#}
+{#                  <a href="{{ href|e }}">{{ caption|e }}#}
+{#                  </a>#}
+{#              </li>#}
+{#            {% endfor %}#}
+
+            <li role="presentation" {% if 'index' == active_page %} class="active"{% endif %}> <a href="{{ url_for("homeRoute.index")|e }}">{{ '首页'|e }}</a></li>
+            <li role="presentation" {% if 'stock_index' == active_page %} class="active"{% endif %}> <a href="{{ url_for("stockRoute.index")|e }}">{{ '股票示例'|e }}</a></li>
+            <li role="presentation" class="dropdown {% if 'chart_index' == active_page or 'table_index'== active_page %} active {% endif %}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  单项示例 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li role="presentation" > <a href="{{ url_for("chartRoute.index")|e }}">{{ 'Chart示例'|e }}</a></li>
+                    <li role="presentation" > <a href="{{ url_for("tableRoute.index")|e }}">{{ 'Table示例'|e }}</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li role="presentation" > <a href="#">{{ '更多功能，尽请期待'|e }}</a></li>
+                </ul>
+
         </ul>
         <br>
         <br>
