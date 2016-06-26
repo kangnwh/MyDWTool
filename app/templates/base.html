@@ -13,8 +13,13 @@
 
 
 {% block content %}
+    <div class="bs-docs-header" tabindex="-1">
+    <div class="container">
+        <h1>商业智能Demo</h1>
+    </div>
+</div>
     <div class="container" >
-      <h1>商业智能Demo</h1>
+
     {% set navigation_bar = [
         (url_for("homeRoute.index"), 'index', '首页'),
         (url_for("stockRoute.index",_method='POST',code='000001'), 'stock_index', '股票示例'),
@@ -37,8 +42,8 @@
                   单项示例 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li role="presentation" > <a href="{{ url_for("chartRoute.index")|e }}">{{ 'Chart示例'|e }}</a></li>
-                    <li role="presentation" > <a href="{{ url_for("tableRoute.index")|e }}">{{ 'Table示例'|e }}</a></li>
+                    <li role="presentation" ><a href="{{ url_for("chartRoute.index")|e }}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  {{ 'Chart示例'|e }}</a></li>
+                    <li role="presentation" ><a href="{{ url_for("tableRoute.index")|e }}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  {{ 'Table示例'|e }}</a></li>
                     <li role="separator" class="divider"></li>
                     <li role="presentation" > <a href="#">{{ '更多功能，尽请期待'|e }}</a></li>
                 </ul>
