@@ -49,6 +49,15 @@ echarts.init(document.getElementById('$chart_id')).setOption(option = {
             },
             formatter:'{a0}<br />{b0} : {c0}%<br /><br />{a1}<br />{b1} : {c1}%'
         },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']}, <!-- , 'stack', 'tiled'  -->
+                restore: {show: true},
+                saveAsImage: {show: true},
+            }
+        },
         grid: {
             show:true,
             left: '3%',
@@ -60,19 +69,29 @@ echarts.init(document.getElementById('$chart_id')).setOption(option = {
         xAxis: {
             type: 'category',
             data: $x_data,
-            axisLabel: {formatter:'{value}'},
+            axisLabel: {
+                formatter: function (value, idx) {
+                    return idx%12 === 0 ? value : '\n'+value;
+                },
+                interval:function (idx, value) {
+                    return idx%6  === 0 ? true : false;
+                },
+                },
             splitLine: {
-                show: false
+                show: true
             },
             boundaryGap: false
         },
+
         yAxis: {
             axisLabel:{formatter:'{value}%'},
             splitNumber: 3,
             splitLine: {
-                show: false
-            }
+                show: true
+            },
+            boundaryGap:false
         },
+
         series: [ {
             name:'$y_name0',
             type: 'line',
