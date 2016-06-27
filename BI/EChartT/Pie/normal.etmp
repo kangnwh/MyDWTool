@@ -25,7 +25,8 @@
 <script>
     <![CDATA[
 
-        echarts.init(document.getElementById('$chart_id')).setOption(option = {
+        mychart = echarts.init(document.getElementById('$chart_id'));
+        mychart.setOption(option = {
             title : {
                 text: '$title',
                 subtext: '$subtitle',
@@ -58,7 +59,9 @@
                 }
             ]
         });
-
+    mychart.on('click', function (params) {
+            console.log(params);
+        });
     ]]>
 </script>
 </configure>

@@ -1,11 +1,11 @@
  # -*- coding: utf-8 -*-
 import datetime as dt
 import tushare as ts
-from flask import Blueprint
+from flask import Blueprint,url_for
 from flask import render_template
 from app.subapps.stock.models import templates_funcs as tf
 
-from BI.EChartT import get_line_script
+from BI.EChartT import get_line_script,get_map_script
 
 chartRoute = Blueprint('chartRoute', __name__,
                  template_folder='templates', static_folder='static')
@@ -44,6 +44,7 @@ def index():
                               chart_id = "stock4",
                               title='动态时间轴')
 
+    script5 = get_map_script('china_normal_sample',chart_id='stock5',map_json=url_for("homeRoute.static",filename="china.json" ))
     return render_template('chart_demo/index.html',
-                           script=script1+script2+script3+script4
+                           script=script1+script2+script3+script4+script5
                            )

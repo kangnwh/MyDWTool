@@ -42,6 +42,14 @@ def get_pie_script(template_name, **kwargs):
     """
     return render_chart(filename = (BASE_PATH + os.sep +"Pie" + os.sep + template_name+'.etmp'),para_dict=kwargs)
 
+def get_map_script(template_name, **kwargs):
+    """
+    :param template_name: 要使用的pie图形的temp name(不需要后缀)
+    :param kwargs: 其他要传递给模版的变量使用 variable=value的形式传入
+    :return: pie图的javascript代码
+    """
+    return render_chart(filename = (BASE_PATH + os.sep +"Map" + os.sep + template_name+'.etmp'),para_dict=kwargs)
+
 
 def pd_to_dict(df):
     # TODO 将pd.dataframe转化成dict
