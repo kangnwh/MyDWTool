@@ -2,7 +2,7 @@
 import datetime as dt
 import tushare as ts
 from flask import Blueprint,url_for
-from flask import render_template
+from flask import render_template,render_template_string
 from app.subapps.stock.models import templates_funcs as tf
 
 from BI.EChartT import get_line_script,get_map_script

@@ -158,7 +158,13 @@
                     }
                 ]
             });
-        })
+            mychart.on('click', function (params) {
+            console.log(params);
+            console.log()
+            window.open('http://cn.bing.com/search?q='+params['name'], '_blank');
+        });
+    })
+
     ]]>
 </script>
 </configure>
