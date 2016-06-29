@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+    <parameter>
+        <name>chart_id</name>
+        <desc>页面中HTML元素的ID</desc>
+    </parameter>
+    <parameter>
+        <name>title</name>
+        <desc>图表title</desc>
+    </parameter>
+    <parameter>
+        <name>subtitle</name>
+        <desc>图表的subtitle</desc>
+    </parameter>
+    <parameter>
+        <name>x_data</name>
+        <desc>X轴数据</desc>
+    </parameter>
+
+    <parameter>
+        <name>y_name0</name>
+        <desc>Y0轴数据的名字</desc>
+    </parameter>
+    <parameter>
+        <name>y_data0</name>
+        <desc>Y0轴数据</desc>
+    </parameter>
+
+    <parameter>
+        <name>y_name1</name>
+        <desc>Y1轴数据</desc>
+    </parameter>
+    <parameter>
+        <name>y_data1</name>
+        <desc>Y1轴数据</desc>
+    </parameter>
+<script>
+    <![CDATA[
+    mychart = echarts.init(document.getElementById('$chart_id'));
+    mychart.setOption(option = {
+        title: {
+            text: '$title',
+            subtext: '$subtitle',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            },
+            formatter:'{a0}<br />{b0} : {c0}%<br /><br />{a1}<br />{b1} : {c1}%'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']}, <!-- , 'stack', 'tiled'  -->
+                restore: {show: true},
+                saveAsImage: {show: true},
+            }
+        },
+        grid: {
+            show:true,
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true,
+            borderColor: '#ccc',
+        },
+        xAxis: {
+            type: 'category',
+            data: $x_data,
+            axisLabel: {
+                formatter: function (value, idx) {
+                    return idx%12 === 0 ? value : '\n'+value;
+                },
+                interval:function (idx, value) {
+                    return idx%6  === 0 ? true : false;
+                },
+                },
+            splitLine: {
+                show: true
+            },
+            boundaryGap: false
+        },
+
+        yAxis: {
+            axisLabel:{formatter:'{value}%'},
+            splitNumber: 3,
+            splitLine: {
+                show: true
+            },
+            boundaryGap:false
+        },
+
+        series: [ {
+            name:'$y_name0',
+            type: 'line',
+            data: $y_data0,
+            hoverAnimation: false,
+            symbolSize: 6,
+            itemStyle: {
+                normal: {
+                    color: '#c23531'
+                }
+            },
+            showSymbol: false
+        },
+        {
+            name: '$y_name1',
+            type: 'line',
+            data: $y_data1,
+            lineStyle:{
+                normal:{
+                    color:'#428bca'
+
+                }
+            },
+            stack: 'confidence-band',
+            symbol: 'none'
+        }]
+    });
+    mychart.on('click', function (params) {
+            console.log(params);
+        });
+    ]]>
+</script>
+</configure>
+

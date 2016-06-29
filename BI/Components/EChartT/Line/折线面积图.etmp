@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?><!-- TODO 变量设置不全 -->
+<configure>
+    <parameter>
+        <name>chart_id</name>
+        <desc>页面中HTML元素的ID</desc>
+    </parameter>
+    <parameter>
+        <name>title</name>
+        <desc>图表title</desc>
+    </parameter>
+
+    <parameter>
+        <name>subtitle</name>
+        <desc>图表subtitle</desc>
+    </parameter>
+
+     <parameter>
+        <name>x_data</name>
+        <desc>X轴数据</desc>
+    </parameter>
+
+    <parameter>
+        <name>y_data</name>
+        <desc>Y轴数据</desc>
+    </parameter>
+
+    <parameter>
+        <name>series_name</name>
+        <desc>数据名称，可以为空</desc>
+    </parameter>
+
+<script>
+    <![CDATA[
+
+echarts.init(document.getElementById('$chart_id')).setOption(option = {
+    tooltip: {
+        trigger: 'axis',
+        position: function (pt) {
+            return [pt[0], '10%'];
+        },
+    },
+    title: {
+        left: 'center',
+        subtext: '$subtitle',
+        text: '$title',
+    },
+    legend: {
+        top: 'bottom',
+        data:['意向']
+    },
+    toolbox: {
+        show: true,
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']}, <!-- , 'stack', 'tiled'  -->
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: $x_data
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        axisLabel:{formatter:'{value}%'},
+    },
+    dataZoom: [{
+        type: 'inside',
+        start: 20,
+        end: 100
+    }, {
+        start: 20,
+        end: 1000
+    }],
+    series: [
+        {
+            name:'$series_name',
+            type:'line',
+            smooth:true,
+            symbol: 'none',
+            sampling: 'average',
+            itemStyle: {
+                normal: {
+                    color: 'rgb(255, 70, 131)'
+                }
+            },
+            areaStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgb(255, 158, 68)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(255, 70, 131)'
+                    }])
+                }
+            },
+            data: $y_data
+        }
+    ]
+});
+]]>
+</script>
+</configure>
+
