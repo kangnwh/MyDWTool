@@ -1,11 +1,16 @@
 # -*- coding:utf-8 -*-
 import datetime as dt
-import os,time
+import os
+import time
+
 import pandas as pd
 import tushare as ts
-from logs import get_logger,logging
-from BI.EChartT import get_word_cloud
+
+from BI.Components.EChartT import get_word_cloud
 from Stock_ETL.config import jieba
+from logs import get_logger,logging
+
+
 #from .config import default_dict,exclude_words
 
 def load_daily_data(session, begin_code="000000"):

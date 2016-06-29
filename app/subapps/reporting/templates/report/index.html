@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+
+
+{% block title %}报表系统演示{% endblock %}
+
+{% block page %}
+    {{ super() }}
+
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    {{ script }}
+{% endblock script %}

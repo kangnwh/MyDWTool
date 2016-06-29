@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% set active_page = "table_index" %}
+{% block title %}表格示例{% endblock %}
+
+{% block page %}
+<h3>数据建模示例</h3>
+    <div>
+    <img src="{{ url_for("tableRoute.static",filename="model_demo.png") }}">
+
+    </div>
+
+{% endblock %}

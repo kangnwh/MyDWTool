@@ -16,3 +16,8 @@ def index():
     stock = tf.get_one_stock_all(subtitle[1],start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))#ts.get_hist_data(subtitle[1],start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
     return render_template('table_demo/index.html',data=stock)
     #return render_template_string(html,table=table )
+
+
+@tableRoute.route('/model', methods=['GET', 'POST'])
+def model():
+    return render_template('table_demo/model.html')

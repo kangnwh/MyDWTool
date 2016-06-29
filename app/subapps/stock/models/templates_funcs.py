@@ -3,7 +3,7 @@ import datetime as dt
 import pandas as pd
 import tushare as ts
 
-from BI.EChartT import generate_pie_data
+from BI.Components.EChartT import generate_pie_data
 from app.db_info import Session,engine
 
 

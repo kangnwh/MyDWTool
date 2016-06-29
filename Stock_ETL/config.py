@@ -1,6 +1,7 @@
-from BI.EChartT import BASE_PATH
-import os,jieba
+import jieba
+import os
 
+from BI.Components.EChartT import BASE_PATH
 
 default_word_font_ttf = BASE_PATH+os.sep+"WordCloud"+os.sep + "幼圆.ttf"
 default_dict = BASE_PATH+os.sep+"WordCloud"+os.sep+"dict"+os.sep+"dict.txt"

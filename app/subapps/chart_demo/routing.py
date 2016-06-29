@@ -1,14 +1,14 @@
  # -*- coding: utf-8 -*-
 import datetime as dt
-import tushare as ts
+
 from flask import Blueprint,url_for
-from flask import render_template,render_template_string
+from flask import render_template
+
+from BI.Components.EChartT import get_line_script,get_map_script
 from app.subapps.stock.models import templates_funcs as tf
 
-from BI.EChartT import get_line_script,get_map_script
-
 chartRoute = Blueprint('chartRoute', __name__,
-                 template_folder='templates', static_folder='static')
+             template_folder='templates', static_folder='static')
 
 
 @chartRoute.route('/', methods=['GET', 'POST'])

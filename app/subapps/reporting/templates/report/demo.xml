@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+    <parameter>
+        <name>stock_code</name>
+        <desc>股票代码</desc>
+        <default>0000001</default>
+    </parameter>
+    <dataset>
+        <name>stock</name>
+        <type>sql</type>
+        <value>select top 90 * from stock.stock_hist where code='$stock_code' order by date desc</value>
+        <engine>connection_string</engine>
+    </dataset>
+    <div class="row">
+        <chart id="chart1"  class="col-md-6"  style="height:300px"></chart>
+        <table id="table1"  class="col-md-6"  style="height:300px"></table>
+    </div>
+</configure>
+

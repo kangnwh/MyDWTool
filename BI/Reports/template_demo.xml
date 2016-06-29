@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure>
+    <dataset name="dataset_name"  type="data/sql/filename"></dataset>
+    <div class="row">
+        <chart id="chart1"  class="col-md-6"  style="height:300px"></chart>
+        <table id="table1"  class="col-md-6"  style="height:300px"></table>
+    </div>
+</configure>
+
