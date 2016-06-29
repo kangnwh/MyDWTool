@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, request, url_for
 from flask import render_template
-from BI.EChartT import get_line_script, get_pie_script
+
+from BI.Components.EChartT import get_line_script, get_pie_script
 from app.subapps.stock.models.templates_funcs import get_index_data
 from .forms.code_select import StockCode
 
@@ -13,7 +14,9 @@ stockRoute = Blueprint('stockRoute', __name__,
 def index():
     code_form = StockCode()
     if request.method == 'GET':
-        return render_template('stock/index_err.html', form=code_form)
+        code = request.args.get('code')
+        if not code:
+            return render_template('stock/index_err.html', form=code_form)
 
     else:
         if code_form.validate_on_submit():
@@ -21,7 +24,7 @@ def index():
         else:
             return render_template('stock/index_err.html', form=code_form)
 
-    code = code if code else "000001"
+    #code = code if code else "000001"
     title = "个股 - 大盘 对比图"
     stock_basic, subtitle, stock_data, x_data, y_data0, y_data1, category, pie_data = get_index_data(code)
 

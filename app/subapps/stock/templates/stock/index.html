@@ -3,17 +3,6 @@
 {% block title %}股票Demo{% endblock %}
 
 
-
-{% block styles %}
-    {{ super() }}
-    <style type="text/css">
-        .label.sv {
-            float: right;
-            line-height: 1.42857143;
-        }
-    </style>
-{% endblock styles %}
-
 {% block page %}
     <h2>股票示例</h2>
 
@@ -69,9 +58,10 @@
                             class="sv label label-default">{{ stock_data.iloc[0]['v_ma20'] }}</span></li>
                 </ul>
 
+
             </div>
         </div>
-        <div id="chart1" class="col-md-6" style="height: 300px;"></div> <!-- 图片展示（近90天走势，大盘走势） -->
+        <div id="chart1" class="col-md-6" style="height: 350px;"></div> <!-- 图片展示（近90天走势，大盘走势） -->
     </div>
 
     <div class="row">
