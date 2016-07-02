@@ -94,7 +94,6 @@ def render_report(report_path,**kwargs):
         e_script.text = all_scripts
         root.append(e_script)
         root.tag="div"
-        tree.write("F://test.xml")
         return etree.tounicode(root,method="html")
     else :
         exception = "\n请正确制定模版中的参数:\n"
