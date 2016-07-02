@@ -34,9 +34,9 @@
 ### 说明 ###
 
 ### parameter ###
-报表内所使用的变量。每个变量需要一个`<parameter></parameter>`标签来定义。
+报表内所使用的变量。每个变量需要一个 `<parameter></parameter>` 标签来定义。
 用于做filter或者实现其他灵活变动，变量名在后边的定义中可以使用.
-#### 例如在`dataset`的`value`中调用 *stock_code*:`$stock_code` ####
+#### 例如在 `dataset` 的 `value` 中调用 *stock_code*: `$stock_code` ####
 ```XML
     <value>select top 90 * from stock.stock_hist where code='$stock_code' order by date desc</value>
 ```
@@ -48,12 +48,13 @@
 
 
 ### dataset ###
-定义数据来源。每个数据来源需要一个`<dataset></dataset>`标签来定义。
-用于获得报表内所显示数据的来源，但是在处理时都会被转换成`pandas.DataFrame`类型的数据。在报表定义内使用dataset的`name`来随时调用数据。
+定义数据来源。每个数据来源需要一个 `<dataset></dataset>` 标签来定义。
+用于获得报表内所显示数据的来源，但是在处理时都会被转换成 `pandas.DataFrame` 类型的数据。在报表定义内使用dataset的 `name` 来随时调用数据。
 
-#### 例如在h2中调用名为*stock*的dataset  ####
+#### 例如在h2中调用名为 *stock* 的 *dataset*  ####
+> stock dataset中第一行的name列的值
 ```HTML
-    <h2>{{ stock.ix[0].name }}</h2>
+    <h2>股票名称:<dsr>stock.ix[0].name<dsr></h2>
 ```
 
 > 每个*dataset*元素包含3个子元素：
@@ -68,8 +69,3 @@
 
 ##### 注意! #####
 > 数据会被转换成`pandas.DataFrame`,因此在使用的时候可以使用 `name.column_name`来访问某列的数据。详情请参考[Pandas文档](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html)。
-
-
-
-
-
