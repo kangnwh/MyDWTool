@@ -82,6 +82,7 @@
 
 ## package requirement:
  - [x] xlwt
+ - [x] lxml
  - [x] openpyxl
  - [x] numpy
  - [x] pandas

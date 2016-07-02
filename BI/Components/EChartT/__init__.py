@@ -8,6 +8,17 @@ ECHART_JS_PACKAGE = BASE_PATH + os.sep + "echarts.min.js"
 BASE_DICT = BASE_PATH+os.sep+"WordCloud"+os.sep+"dict"+os.sep+"dict.txt"
 
 
+def generate_chart(type,template_name,kwargs):
+    if type == "Line":
+        return get_line_script(template_name,**kwargs)
+    elif type == "Map":
+        pass
+    elif type == "Pie":
+        return get_pie_script(template_name,**kwargs)
+    elif type == "WordCloud":
+        pass
+    elif type == "Bar":
+        pass #return get_pie_script(template_name,**kwargs)
 
 def get_line_script(template_name, **kwargs):
     # print(kwargs)
@@ -34,6 +45,7 @@ def generate_pie_data(df):
     else:
         raise Exception('添加的数据必须是dict,并且是以下样式{"category1":value1,"category2":value2,...,}')
 
+
 def get_pie_script(template_name, **kwargs):
     """
     :param template_name: 要使用的pie图形的temp name(不需要后缀)
@@ -41,6 +53,7 @@ def get_pie_script(template_name, **kwargs):
     :return: pie图的javascript代码
     """
     return render_chart(filename = (BASE_PATH + os.sep +"Pie" + os.sep + template_name+'.etmp'),para_dict=kwargs)
+
 
 def get_map_script(template_name, **kwargs):
     """
@@ -86,3 +99,4 @@ def get_word_cloud(content, file_name,
     print(file_with_path)
     wc.to_file(file_with_path)
     return file_name
+

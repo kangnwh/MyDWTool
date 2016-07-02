@@ -4,6 +4,7 @@ from app.subapps.home.routing import homeRoute
 from app.subapps.chart_demo.routing import chartRoute
 from app.subapps.table_demo.routing import tableRoute
 from app.subapps.stock.routing import stockRoute
+from app.subapps.reporting.routing import reportRoute
 
 DEBUG = True
 SQLALCHEMY_ECHO = False
@@ -22,4 +23,5 @@ DEFAULT_MODULES = (
     (chartRoute, '/chart'),
     (tableRoute, '/table'),
     (stockRoute, '/stock'),
+    (reportRoute, '/report'),
 )

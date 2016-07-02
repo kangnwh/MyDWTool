@@ -1,0 +1,3 @@
+
+class echartError(Exception):
+    pass

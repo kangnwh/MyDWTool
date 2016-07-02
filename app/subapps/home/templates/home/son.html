@@ -1,8 +1,47 @@
 
-<h2>该网站的主要目的是展示自己开发的一套数据仓库ELT=>Reporting的效果</h2>
-<ul class="list-group">
-  <li class="list-group-item list-group-item-success">基于ECharts的图表制作:目前只有3个Template,而且只有一个可以使用</li>
-  <li class="list-group-item list-group-item-warning">表格的制作：只展示了一种表格的效果</li>
-  <li class="list-group-item list-group-item-warning">ETL：在股票示例中使用了基于Pandas的ETL过程.</li>
-</ul>
+<h2>本项目旨在完成一套轻量级的ETL->Reporting</h2>
 
+<div class="list-group-item">
+
+      <h4><strong>基于Flask,Pandas,ECharts的轻量级报表系统</strong></h4>
+      <ul>
+          <li class="list-group-item list-group-item-success">
+              <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+              海量基于ECharts图表模版</li>
+          <li class="list-group-item list-group-item-success">
+              <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+              基于Bootstrap的表格模版
+          </li>
+          <li class="list-group-item list-group-item-success">
+              <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+              基于SQLAlchemy和Pandas的数据源管理
+          </li>
+          <li class="list-group-item list-group-item-success">
+              <span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>
+              使用类HTML的XML格式对Report进行高度定制,在xml中可以灵活的定义参数、数据源、图表、表格、css显示样式以及javascript脚本
+          </li>
+          <br>
+          <li class="list-group-item active">
+              <strong>所有图表及表格都有十分强大的可定制性，可以自行设计显示模版，并在自定义报表中调用。</strong>
+          </li>
+      </ul>
+
+</div>
+<br>
+<div class="list-group-item">
+     <h4><strong>基于Pandas的ETL系统</strong></h4>
+    <ul>
+      <li class="list-group-item list-group-item-warning">基于SQLAlchemy的数据库数据源管理，通过各个数据库的开源py模块可以接入多种数据库数据源。</li>
+      <li class="list-group-item list-group-item-warning">基于Pandas和SQL的ETL过程，使得数据的抽取、转化以及加载过程变得更加灵活高效。</li>
+    </ul>
+</div>
+
+<br>
+<div class="list-group-item">
+     <h4><strong>使用本系统做实现的<a href="{{ url_for("stockRoute.index",code="000001") }}"><samp>A股股票信息查询系统</samp></a></strong></h4>
+    <ul>
+      <li class="list-group-item list-group-item-info">使用Tushare来进行每日股票行情进行同步。</li>
+      <li class="list-group-item list-group-item-info">使用本系统的ETL模块对股票信息进行模型的建立和指标的计算。</li>
+      <li class="list-group-item list-group-item-info">使用本系统的Report模块设计报表并进行展示。</li>
+    </ul>
+</div>

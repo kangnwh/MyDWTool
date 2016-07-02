@@ -3,9 +3,9 @@ import xml.dom.minidom
 
 
 def render_chart(filename, para_dict):
-    p_dict,scirpt = getConfig(filename)
+    p_dict,scirpt = get_config(filename)
 
-    if checkParameters(p_dict, para_dict):
+    if check_parameters(p_dict, para_dict):
         t = string.Template(scirpt)
         script = t.safe_substitute(para_dict)
         return script
@@ -14,10 +14,19 @@ def render_chart(filename, para_dict):
         for (key,desc) in p_dict.items():
             exception += "\t{key}:{desc}\n".format(key=key,desc=desc)
 
+        exception += "\n传递的参数：\n"
+        for (key) in para_dict.keys():
+            exception += "{key},".format(key=key)
+
         raise Exception(exception)
 
 
-def getConfig(file):
+def get_config(file):
+    '''
+    get parameters and script information from *.etmp files
+    :param file:
+    :return:
+    '''
     dom = xml.dom.minidom.parse(file)
     root = dom.documentElement
     p_list = root.getElementsByTagName('parameter')
@@ -28,7 +37,13 @@ def getConfig(file):
     return p_dict,script
 
 
-def checkParameters(p_dict,para_dict):
+def check_parameters(p_dict, para_dict):
+    '''
+    check whether the given parameter sets is equal to the parameter set defined in *.etmp files
+    :param p_dict: parameter sets defined in *.etmp
+    :param para_dict: parmeter sets given by function caller
+    :return: True if equal
+    '''
     p_list = list(p_dict.keys())
     d = list(para_dict.keys())
 

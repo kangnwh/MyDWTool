@@ -1,14 +1,32 @@
 {% extends "base.html" %}
-{% set active_page = "index" %}
+{% set active_page = "chart_index" %}
+{% block title %}报表自定义展示{% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <script src="{{ url_for('chartRoute.static', filename='echarts.min.js') }}"></script>
+{% endblock head %}
 
-{% block title %}报表系统演示{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style type="text/css">
+    .label.sv {
+        float: right;
+        line-height:1.42857143;
+    }
+    </style>
+{% endblock styles %}
 
 {% block page %}
-    {{ super() }}
+<h2>自定义报表 - demo.xml</h2>
+
+<div class ="row">
+    {{ report|safe }}
+</div>
 
 {% endblock %}
-{% block script %}
+
+{% block script_src %}
     {{ super() }}
-    {{ script }}
-{% endblock script %}
+    <script src="{{ url_for('chartRoute.static', filename='echarts.min.js') }}"></script>
+{% endblock script_src %}

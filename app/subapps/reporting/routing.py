@@ -1,6 +1,6 @@
  # -*- coding: utf-8 -*-
 from flask import Blueprint
-from flask import render_template
+from .common import render_html
 from BI.Reports import render_report
 
 reportRoute = Blueprint('reportRoute', __name__,
@@ -9,5 +9,5 @@ reportRoute = Blueprint('reportRoute', __name__,
 
 @reportRoute.route('/', methods=['GET', 'POST'])
 def index():
-
-    return render_template('report/index.html')
+    report = render_report('F:\\business\\MyECharts\\app\\subapps\\reporting\\templates\\report\\demo.xml',stock_code="000001")
+    return render_html(report)

@@ -9,10 +9,25 @@
         <name>stock</name>
         <type>sql</type>
         <value>select top 90 * from stock.stock_hist where code='$stock_code' order by date desc</value>
-        <engine>connection_string</engine>
+        <engine>mssql+pymssql://biuser:bi@2016@218.88.13.118:1433/stock?charset=utf8</engine>
+    </dataset>
+    <dataset>
+        <name>stock_list</name>
+        <type>list</type>
+        <value>000001,002340,300059,600570</value>
+        <sep>,</sep>
     </dataset>
     <div class="row">
-        <chart id="chart1"  class="col-md-6"  style="height:300px"></chart>
+        <h2><dsr>stock.iloc[0].p_change</dsr></h2>
+        <chart id="chart1"  class="col-md-6"  style="height:300px">
+            <type>Line</type>
+            <template>normal</template>
+            <parameter name="chart_id">chart1</parameter>
+            <parameter name="title">测试title</parameter>
+            <parameter name="subtitle">测试subtitle</parameter>
+            <parameter name="x_data"><dsr>stock.date.tolist()</dsr></parameter>
+            <parameter name="y_data"><dsr>stock.open.tolist()</dsr></parameter>
+        </chart>
         <table id="table1"  class="col-md-6"  style="height:300px"></table>
     </div>
 </configure>
