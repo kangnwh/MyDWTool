@@ -12,13 +12,3 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 { font-family: Micro
             float: right;
             line-height: 1.42857143;
         }
-
-table thead.pinned{
-    position:absolute;
-    display:block;
-    top:0;
-}
-
-table tbody.pinned{
-    margin-top:20px;
-}

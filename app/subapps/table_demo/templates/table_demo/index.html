@@ -31,9 +31,9 @@
     </div>
 
     <div class="col-md-9">
-        <div class="pre-scrollable" style="max-height:500px;">
 
-                <table class="table table-hover table-fixed-head" >
+
+                <table class="table table-hover" >
                     <thead class="">
                         <tr>
                             {% for col_name in data.columns %}
@@ -55,11 +55,18 @@
 
         </table>
         </div>
-    </div>
+
 </div>
 
     <script>
-
+        $('table').table_scroll({
+            fixedColumnsLeft: 2,
+            rowsInScrollableArea:15,
+            fixedColumnsRight: 0,
+            columnsInScrollableArea: 5,
+            scrollX: 0,
+            scrollY: 0
+        });
     </script>
 
 {% endblock %}
