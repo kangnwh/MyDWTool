@@ -72,6 +72,29 @@ def get_one_stock_all(code,start,end):
     df = run_sql_via_pandas(sql)
     return df
 
+def get_one_stock_for_table(code,start,end):
+    sql = """
+    SELECT [code] as '股票代码'
+      ,[open] as '开盘价'
+      ,[high] as '最高价'
+      ,[close] as '收盘价'
+      ,[low] as '最低价'
+      ,[volume]/1000 as '成交量'
+      ,[price_change] as '涨跌价格'
+      ,[p_change] as '涨跌比例'
+      -- ,[ma5]
+      --,[ma10]
+      --,[ma20]
+      --,[v_ma5]
+      --,[v_ma10]
+      --,[v_ma20]
+      ,[turnover] as '换手率'
+      ,[date] as '日期'
+  FROM [stock].[stock_hist] where code='{code}' and date between '{start}' and '{end}' order by date desc
+    """.format(code=code,start=start,end=end)
+    df = run_sql_via_pandas(sql)
+    return df
+
 
 def get_index_data(code):
 

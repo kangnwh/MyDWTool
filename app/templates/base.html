@@ -2,8 +2,18 @@
 
 {% block head %}
     <link rel="stylesheet" href=" {{ url_for("homeRoute.static",filename="css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href=" {{ url_for("homeRoute.static",filename="css/bootstrapSwitch.css") }}">
     {% block favicon %}<link rel="icon" href="{{ url_for("homeRoute.static",filename="icon/favicon.png") }}">{% endblock %}
     <link rel="stylesheet" href=" {{ url_for("homeRoute.static",filename="css/mystyle.css") }}">
+    <script src="{{ url_for("homeRoute.static",filename="js/jquery-1.11.3.min.js") }}"></script>
+    <script src="{{ url_for("homeRoute.static",filename="js/bootstrap.min.js") }}"></script>
+    <script src="{{ url_for("homeRoute.static",filename="js/bootstrapSwitch.js") }}"></script>
+    <script src="{{ url_for("homeRoute.static",filename="js/jquery.pin.js") }}"></script>
+    <script src="{{ url_for("homeRoute.static",filename="js/jquery.michiweber.table-head-fixed.js") }}"></script>
+    {% block script_src %}{% endblock %}
+    <script>
+        {% block script_code %}{% endblock %}
+    </script>
 {% endblock head %}
 
 
@@ -61,12 +71,7 @@
 {% endblock %}
 
  {% block scripts %}
-            <script src="{{ url_for("homeRoute.static",filename="js/jquery-1.11.3.min.js") }}"></script>
-            <script src="{{ url_for("homeRoute.static",filename="js/bootstrap.min.js") }}"></script>
-            {% block script_src %}{% endblock %}
-            <script>
-                {% block script_code %}{% endblock %}
-            </script>
+
 {% endblock %}
 
 

@@ -3,8 +3,9 @@
 {% block title %}报表自定义展示{% endblock %}
 
 {% block head %}
-    {{ super() }}
     <script src="{{ url_for('chartRoute.static', filename='echarts.min.js') }}"></script>
+    {{ super() }}
+
 {% endblock head %}
 
 {% block styles %}
