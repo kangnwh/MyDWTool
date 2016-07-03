@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% set active_page = "table_index" %}
+{% block title %}表格示例{% endblock %}
+
+{% block page %}
+
+<h3>选择需要隐藏的列</h3>
+<div class="row">
+
+               {% for col_name in data.columns %}
+                   <li  class="list-group-item">
+                   <div class="switch switch-mini"  id="col_{{ col_name }}" data-on-label="显" data-off-label="隐" style="width: 32px;">
+                        <input type="checkbox" data-size="mini" checked />
+                    </div>{{ col_name }}
+                   <script>
+                        $('#col_{{ col_name }}').on('switch-change', function (event, state) {
+                            if(state.value){
+                                $(".col_{{ col_name }}").show();
+
+                            }else{
+                                 $(".col_{{ col_name }}").hide();
+                            }
+                        });
+
+                    </script>
+                   </li>
+               {% endfor %}
+
+    </div>
+    <div class="row">
+        <div class="col-md-9 pre-scrollable">
+                    <table class="table table-hover" >
+                        <thead class="">
+                            <tr>
+                                {% for col_name in data.columns %}
+                                    <th class="col_{{ col_name }}">{{ col_name }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+
+
+                        <tbody class="">
+                            {% for row in data.iterrows()  %}
+                               <tr>
+                                    {% for key in row[1].keys() %}
+                                        <td class="col_{{ key }}">{{ row[1][key] }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                          </tbody>
+
+            </table>
+            </div>
+    </div>
+
+    <script>
+     // $('table').table_scroll({
+     //     fixedColumnsLeft: 2,
+     //     rowsInScrollableArea:15,
+     //     fixedColumnsRight: 0,
+     //     columnsI//nScrollableArea: 5,
+     //     scrollX: 0,
+     //     scrollY: 0
+     // });
+    </script>
+
+{% endblock %}
