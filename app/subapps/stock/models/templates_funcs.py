@@ -85,6 +85,7 @@ def get_one_stock_all(code,start,end):
 
 def get_deal_detail(code,date):
     df = ts.get_tick_data(code,date=date)
+    df =df.head(100)
     df.columns = ["交易时间","成交价格","价格变动","成交手","成交金额","买卖类型"]
     return df
 

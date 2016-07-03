@@ -5,16 +5,17 @@
 {% block page %}
 
 <h3>选择需要的标签</h3>
+    <p>为方便演示，此处仅显示100条数据。</p>
 <div class="row">
 
        {% for col_name in data.columns %}
            <input class="column_show_hide" id="col_{{ col_name }}" type="checkbox" {% if loop.index <= 2 %}checked {% else %} unchecked {% endif %}/>{{ col_name }}
-             <script>
-            $('.column_show_hide').on('change', function (event, state) {
+            <script>
+            $('#col_{{ col_name }}').on('change', function () {
                 if($( this).is(':checked')){
-                    $("."+$( this ).attr('id')).show()
+                    $(".col_{{ col_name }}").show()
                 }else{
-                    $("."+$( this ).attr('id')).hide()
+                    $(".col_{{ col_name }}").hide()
                 }
             });
 
@@ -46,14 +47,6 @@
                           </tbody>
 
             </table>
-            <script>
-                 $(function() {
-{#                     $('.col_价格变动').hide();#}
-{#                     $('.col_成交手').hide();#}
-{#                     $('.col_成交金额').hide();#}
-{#                     $('.col_买卖类型').hide();#}
-                 })
-                </script>
             </div>
     </div>
 
