@@ -7,23 +7,20 @@
 <h3>选择需要的标签</h3>
 <div class="row">
 
-               {% for col_name in data.columns %}
-{#                   <li  class="list-group-item">#}
-{#                   <div   id="col_{{ col_name }}" data-on-label="显" data-off-label="隐" style="width: 32px;">#}
-                        <input id="col_{{ col_name }}" type="checkbox" checked />{{ col_name }}
-{#                    </div>#}
-                   <script>
-                        $('#col_{{ col_name }}').on('change', function (event, state) {
-                            if($( this).is(':checked')){
-                                $("."+$( this ).attr('id')).show()
-                            }else{
-                                $("."+$( this ).attr('id')).hide()
-                            }
-                        });
+       {% for col_name in data.columns %}
+           <input class="column_show_hide" id="col_{{ col_name }}" type="checkbox" {% if loop.index <= 2 %}checked {% else %} unchecked {% endif %}/>{{ col_name }}
+             <script>
+            $('.column_show_hide').on('change', function (event, state) {
+                if($( this).is(':checked')){
+                    $("."+$( this ).attr('id')).show()
+                }else{
+                    $("."+$( this ).attr('id')).hide()
+                }
+            });
 
-                    </script>
-{#                   </li>#}
-               {% endfor %}
+        </script>
+       {% endfor %}
+
 
     </div>
     <div class="row">
@@ -49,18 +46,19 @@
                           </tbody>
 
             </table>
+            <script>
+                 $(function() {
+                    // if ($.browser.msie) {
+                     $('#col_价格变动').trigger("change");
+                     $('#col_成交手').trigger("change");
+                     $('#col_成交金额').trigger("change");
+                     $('#col_买卖类型').trigger("change");
+                    // }
+                 })
+                </script>
             </div>
     </div>
 
-    <script>
-     // $('table').table_scroll({
-     //     fixedColumnsLeft: 2,
-     //     rowsInScrollableArea:15,
-     //     fixedColumnsRight: 0,
-     //     columnsI//nScrollableArea: 5,
-     //     scrollX: 0,
-     //     scrollY: 0
-     // });
-    </script>
+
 
 {% endblock %}
