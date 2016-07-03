@@ -27,9 +27,9 @@
         <div class="col-md-9 pre-scrollable">
                     <table class="table table-hover" >
                         <thead class="">
-                            <tr>
+                            <tr >
                                 {% for col_name in data.columns %}
-                                    <th class="col_{{ col_name }}">{{ col_name }}</th>
+                                    <th class="col_{{ col_name }}" style="display:{% if col_name in ['交易时间','成交价格'] %}true{% else %}none{% endif %};">{{ col_name }}</th>
                                 {% endfor %}
                             </tr>
                         </thead>
@@ -37,9 +37,9 @@
 
                         <tbody class="">
                             {% for row in data.iterrows()  %}
-                               <tr>
+                               <tr  >
                                     {% for key in row[1].keys() %}
-                                        <td class="col_{{ key }}">{{ row[1][key] }}</td>
+                                        <td style="display:{% if key in ['交易时间','成交价格'] %}true{% else %}none{% endif %};" class="col_{{ key }}">{{ row[1][key] }}</td>
                                     {% endfor %}
                                 </tr>
                             {% endfor %}
@@ -48,12 +48,10 @@
             </table>
             <script>
                  $(function() {
-                    // if ($.browser.msie) {
-                     $('#col_价格变动').trigger("change");
-                     $('#col_成交手').trigger("change");
-                     $('#col_成交金额').trigger("change");
-                     $('#col_买卖类型').trigger("change");
-                    // }
+{#                     $('.col_价格变动').hide();#}
+{#                     $('.col_成交手').hide();#}
+{#                     $('.col_成交金额').hide();#}
+{#                     $('.col_买卖类型').hide();#}
                  })
                 </script>
             </div>
