@@ -34,6 +34,21 @@
         <name>y_data1</name>
         <desc>Y1轴数据</desc>
     </parameter>
+
+    <parameter>
+        <name>new_url</name>
+        <desc>要跳转的url</desc>
+    </parameter>
+
+    <parameter>
+        <name>new_p_names</name>
+        <desc>跳转时传递的变量名，是一个列表</desc>
+    </parameter>
+
+    <parameter>
+        <name>new_p_items</name>
+        <desc>跳转时对应变量名的字段名</desc>
+    </parameter>
 <script>
     <![CDATA[
     mychart = echarts.init(document.getElementById('$chart_id'));
@@ -121,7 +136,13 @@
         }]
     });
     mychart.on('click', function (params) {
-            console.log(params);
+            new_url="$new_url"+"?";
+            new_p_names=$new_p_names;
+            new_p_items=$new_p_items;
+            for(i=0;i<new_p_names.length;i++){
+                new_url = new_url + new_p_names[i] + "=" + params[new_p_items[i]]  +"&" ;
+            }
+            window.open(new_url, '_blank');
         });
     ]]>
 </script>

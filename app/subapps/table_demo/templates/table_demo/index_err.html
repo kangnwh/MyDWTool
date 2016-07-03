@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% set active_page = "table_index" %}
+{% block title %}表格示例{% endblock %}
+
+{% block page %}
+
+<h3>请指定股票名称和交易日期</h3>
+<form action="{{ url_for("tableRoute.index") }}" method="GET">
+    <input type="text" name="stock_name"/>
+    <input type="date" name="date"/>
+    <button type="submit">查询</button>
+</form>
+{% endblock %}

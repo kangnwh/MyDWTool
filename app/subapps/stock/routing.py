@@ -36,6 +36,9 @@ def index():
                               subtitle=subtitle[0] + " - 收盘价",
                               y_name0=subtitle[0], y_data0=y_data0,
                               y_name1="大盘指数", y_data1=y_data1,
+                              new_url="http://127.0.0.1:5001/table/",
+                              new_p_names=["stock_name","date"],
+                              new_p_items=["seriesName","name"]
                               )
 
     script2 = get_pie_script("normal",

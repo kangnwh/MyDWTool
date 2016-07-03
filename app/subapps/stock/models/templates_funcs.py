@@ -26,6 +26,17 @@ def get_max_date(code):
     df = run_sql_via_sqlalchemy(sql)
     return df[0][0]
 
+
+def get_code_from_name(name):
+    sql="""
+    SELECT code as code
+      FROM [stock].[comp_basic] where name=N'{name}'
+    """.format(name=name)
+    df = run_sql_via_sqlalchemy(sql)
+    print(df)
+    return df[0][0]
+
+
 def get_basic(code):
     sql = """
     SELECT [code]
@@ -72,28 +83,9 @@ def get_one_stock_all(code,start,end):
     df = run_sql_via_pandas(sql)
     return df
 
-def get_one_stock_for_table(code,start,end):
-    sql = """
-    SELECT [code] as '股票代码'
-      ,[date] as '日期'
-      ,[open] as '开盘价'
-      ,[high] as '最高价'
-      ,[close] as '收盘价'
-      ,[low] as '最低价'
-      ,[volume]/1000 as '成交量'
-      ,[price_change] as '涨跌价格'
-      ,[p_change] as '涨跌比例'
-      -- ,[ma5]
-      --,[ma10]
-      --,[ma20]
-      --,[v_ma5]
-      --,[v_ma10]
-      --,[v_ma20]
-      ,[turnover] as '换手率'
-
-  FROM [stock].[stock_hist] where code='{code}' and date between '{start}' and '{end}' order by date desc
-    """.format(code=code,start=start,end=end)
-    df = run_sql_via_pandas(sql)
+def get_deal_detail(code,date):
+    df = ts.get_tick_data(code,date=date)
+    df.columns = ["交易时间","成交价格","价格变动","成交手","成交金额","买卖类型"]
     return df
 
 
