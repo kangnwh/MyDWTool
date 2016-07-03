@@ -4,26 +4,25 @@
 
 {% block page %}
 
-<h3>选择需要隐藏的列</h3>
+<h3>选择需要的标签</h3>
 <div class="row">
 
                {% for col_name in data.columns %}
-                   <li  class="list-group-item">
-                   <div class="switch switch-mini"  id="col_{{ col_name }}" data-on-label="显" data-off-label="隐" style="width: 32px;">
-                        <input type="checkbox" data-size="mini" checked />
-                    </div>{{ col_name }}
+{#                   <li  class="list-group-item">#}
+{#                   <div   id="col_{{ col_name }}" data-on-label="显" data-off-label="隐" style="width: 32px;">#}
+                        <input id="col_{{ col_name }}" type="checkbox" checked />{{ col_name }}
+{#                    </div>#}
                    <script>
-                        $('#col_{{ col_name }}').on('switch-change', function (event, state) {
-                            if(state.value){
-                                $(".col_{{ col_name }}").show();
-
+                        $('#col_{{ col_name }}').on('change', function (event, state) {
+                            if($( this).is(':checked')){
+                                $("."+$( this ).attr('id')).show()
                             }else{
-                                 $(".col_{{ col_name }}").hide();
+                                $("."+$( this ).attr('id')).hide()
                             }
                         });
 
                     </script>
-                   </li>
+{#                   </li>#}
                {% endfor %}
 
     </div>

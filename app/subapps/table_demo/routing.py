@@ -19,8 +19,7 @@ def index():
             return render_template('table_demo/index_err.html',message="请指定股票名称和交易日期")
 
         stock_code = tf.get_code_from_name(stock_name)
-        date = request.args.get('date')
-        date = date if date else ""
+
     stock_code = stock_code if stock_code else "600570"
     today = dt.datetime.now()
     start = today + dt.timedelta(days=-90)
@@ -28,7 +27,7 @@ def index():
     if stock_pd.index.__len__() == 3:
         return  render_template('table_demo/index_err.html',message="指定股票名称在该日期内没有数据")
 
-    return render_template('table_demo/index.html',data=stock_pd)
+    return render_template('table_demo/index_simple.html',data=stock_pd)
     #return render_template_string(html,table=table )
 
 
