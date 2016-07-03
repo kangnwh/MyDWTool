@@ -25,8 +25,8 @@ def index():
     today = dt.datetime.now()
     start = today + dt.timedelta(days=-90)
     stock_pd = tf.get_deal_detail(stock_code,date)#ts.get_hist_data(subtitle[1],start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-    if not stock_pd:
-        return  render_template('table_demo/index_err.html',message="没有数据")
+    if stock_pd.index.__len__() == 3:
+        return  render_template('table_demo/index_err.html',message="指定股票名称在该日期内没有数据")
 
     return render_template('table_demo/index.html',data=stock_pd)
     #return render_template_string(html,table=table )

@@ -33,8 +33,8 @@ def get_code_from_name(name):
       FROM [stock].[comp_basic] where name=N'{name}'
     """.format(name=name)
     df = run_sql_via_sqlalchemy(sql)
-    print(df)
-    return df[0][0]
+
+    return df[0][0] if df else ""
 
 
 def get_basic(code):
