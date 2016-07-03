@@ -16,7 +16,7 @@ def index():
         stock_name = request.args.get('stock_name')
         date = request.args.get('date')
         if not (stock_name and date):
-            return render_template('table_demo/index_err.html')
+            return render_template('table_demo/index_err.html',message="请指定股票名称和交易日期")
 
         stock_code = tf.get_code_from_name(stock_name)
         date = request.args.get('date')
@@ -25,7 +25,8 @@ def index():
     today = dt.datetime.now()
     start = today + dt.timedelta(days=-90)
     stock_pd = tf.get_deal_detail(stock_code,date)#ts.get_hist_data(subtitle[1],start=start.strftime('%Y-%m-%d'),end=today.strftime('%Y-%m-%d'))
-
+    if not stock_pd:
+        return  render_template('table_demo/index_err.html',message="没有数据")
 
     return render_template('table_demo/index.html',data=stock_pd)
     #return render_template_string(html,table=table )

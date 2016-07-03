@@ -121,6 +121,7 @@ def load_comp_basic(session):
     finally:
         session.close()
 
+
 def get_all_code_basic(session,begin_code="000000"):
     sql = "select * from [stock].[comp_basic] where code>={code}".format(code=begin_code)
     df = pd.read_sql(sql,session.get_bind())

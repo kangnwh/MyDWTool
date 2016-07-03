@@ -4,7 +4,7 @@
 
 {% block page %}
 
-<h3>请指定股票名称和交易日期</h3>
+<h3>{{ message }}</h3>
 <form action="{{ url_for("tableRoute.index") }}" method="GET">
     <input type="text" name="stock_name"/>
     <input type="date" name="date"/>
