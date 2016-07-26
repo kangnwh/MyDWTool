@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, request, url_for
 from flask import render_template
-
+from flask_login import login_required
 from BI.Components.EChartT import get_line_script, get_pie_script
 from app.subapps.stock.models.templates_funcs import get_index_data
 from .forms.code_select import StockCode
@@ -11,6 +11,7 @@ stockRoute = Blueprint('stockRoute', __name__,
 
 
 @stockRoute.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     code_form = StockCode()
     if request.method == 'GET':

@@ -6,12 +6,15 @@ from flask import render_template
 
 from BI.Components.EChartT import get_line_script,get_map_script
 from app.subapps.stock.models import templates_funcs as tf
+from flask_login import login_required
+
 
 chartRoute = Blueprint('chartRoute', __name__,
              template_folder='templates', static_folder='static')
 
 
 @chartRoute.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
 
     title = "普通折线图"

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+
+
+{% block title %}商业智能示例{% endblock %}
+
+{% block page %}
+    {{ super() }}
+
+    <h1>Sign In</h1>
+    <form action="" method="post" name="login">
+        {{form.hidden_tag()}}
+        <p>
+            Please enter your userid:<br>
+            {{form.email(size=80)}}<br>
+        </p>
+         <p>Please enter your password{{form.password}}</p>
+        <p>{{form.remember_me}} Remember Me</p>
+        <p><input type="submit" value="Sign In"></p>
+    </form>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    {{ script }}
+{% endblock script %}

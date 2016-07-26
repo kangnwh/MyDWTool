@@ -4,3 +4,4 @@ class EchartBaseObject():
 
     def __repr__(self):
         return self.make_json()
+

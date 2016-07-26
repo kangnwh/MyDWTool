@@ -3,13 +3,14 @@ from flask import Blueprint,request
 from flask import render_template
 import datetime as dt
 from app.subapps.stock.models import templates_funcs as tf
-import tushare as ts
+from flask_login import login_required
 
 tableRoute = Blueprint('tableRoute', __name__,
                      template_folder='templates', static_folder='static')
 
 
 @tableRoute.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     stock_code = None
     if request.method == 'GET':
@@ -32,5 +33,6 @@ def index():
 
 
 @tableRoute.route('/model', methods=['GET', 'POST'])
+@login_required
 def model():
     return render_template('table_demo/model.html')
