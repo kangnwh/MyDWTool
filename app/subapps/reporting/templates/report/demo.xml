@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configure>
     <parameter>
-        <name>stock_code</name>
-        <desc>股票代码</desc>
-        <default>0000001</default>
+            <name>stock_code</name>
+            <type>text</type>
+            <desc>股票代码</desc>
+            <default>0000001</default>
     </parameter>
     <dataset>
         <name>stock</name>
@@ -17,18 +18,35 @@
         <value>000001,002340,300059,600570</value>
         <sep>,</sep>
     </dataset>
-    <div class="row">
-        <h2><dsr>stock.iloc[0].p_change</dsr></h2>
-        <chart id="chart1"  class="col-md-6"  style="height:300px">
-            <type>Line</type>
-            <template>normal</template>
-            <parameter name="chart_id">chart1</parameter>
-            <parameter name="title">测试title</parameter>
-            <parameter name="subtitle">测试subtitle</parameter>
-            <parameter name="x_data"><dsr>stock.date.tolist()</dsr></parameter>
-            <parameter name="y_data"><dsr>stock.open.tolist()</dsr></parameter>
-        </chart>
-        <table id="table1"  class="col-md-6"  style="height:300px"></table>
+
+    <div class="container">
+        <report_page>
+            <h2><dsr>stock.iloc[0].p_change</dsr></h2>
+        </report_page>
+
+        <div class="row">
+        <prompt_page>
+
+            <prompt>stock_code</prompt>
+            <submit>提交</submit>
+        </prompt_page>
+        </div>
+
+
+        <report_page>
+        <div class="row">
+            <chart id="chart1"  class="col-md-6"  style="height:300px">
+                <type>Line</type>
+                <template>normal</template>
+                <parameter name="chart_id">chart1</parameter>
+                <parameter name="title">测试title</parameter>
+                <parameter name="subtitle">测试subtitle</parameter>
+                <parameter name="x_data"><dsr>stock.date.tolist()</dsr></parameter>
+                <parameter name="y_data"><dsr>stock.open.tolist()</dsr></parameter>
+            </chart>
+            <table id="table1"  class="col-md-6"  style="height:300px"></table>
+        </div>
+        </report_page>
     </div>
 </configure>
 

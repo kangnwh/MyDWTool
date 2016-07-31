@@ -1,5 +1,5 @@
  # -*- coding: utf-8 -*-
-from flask import Blueprint
+from flask import Blueprint,request
 from .common import render_html
 from BI.Reports import render_report
 import os
@@ -10,8 +10,12 @@ reportRoute = Blueprint('reportRoute', __name__,
 
 REPORT_TEMPLATE_FOLDER = os.path.split(os.path.realpath(__file__))[0] + os.sep + "templates" +os.sep + "report"
 
-@reportRoute.route('/', methods=['GET', 'POST'])
+@reportRoute.route('/<template>', methods=['GET', 'POST'])
 @login_required
-def index():
-    report = render_report(REPORT_TEMPLATE_FOLDER+os.sep+'demo.xml',stock_code="000001")
+def index(template):
+    if request.method == 'GET':
+        template = template # request.args.get('template',"demo.xml")
+    print(request.args)
+    kwargs = (request.args)
+    report = render_report(REPORT_TEMPLATE_FOLDER+os.sep+template,kwargs=kwargs)
     return render_html(report)

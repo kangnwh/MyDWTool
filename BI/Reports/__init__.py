@@ -4,18 +4,18 @@ import pandas as pd,string
 import sqlalchemy as sa
 from BI.Components.EChartT import generate_chart
 
-def render_report(report_path,**kwargs):
-    #TODO add report xml format link
-    #TODO use #data_set# to mark where any dataset should be called. and we can use any pd.DataFrame functions such as #pd.iloc[0].column01#,
-    #TODO  or together with parameters like #pd.iloc[0].$dynamic_column#
-    #TODO and to implement  functions listed above, we need to do the parameter replace first and then use isinstance(eval("str_before_dot"),pd.DataFrame) to ensure
-    #TODO the dataset does be a pd.DataFrame before we use eval("whole_dataset_str")
+def render_report(report_path,kwargs):
+    #Report XML Format Description : https://github.com/kangnwh/MyDWTool/blob/master/BI/Reports/ReportXMLFormatDesc.md
+    #Use <dsr>data_set</dsr> to mark where any dataset should be called. and we can use any pd.DataFrame functions such as <dsr>pd.iloc[0].column01</dsr>,
+    #   or together with parameters like #pd.iloc[0].$dynamic_column#
     """
     generate report according to the report definition from an xml
     :param report_path: xml file with report definition. the please check the format here
     :param kwargs: dict like parameters which will fill in the report
     :return:
     """
+
+    print(kwargs)
     tree = etree.parse(report_path)
     root = tree.getroot()
 
@@ -25,24 +25,32 @@ def render_report(report_path,**kwargs):
     all_scripts = ""
 
     #get all parameter definitions and remove parameter elements
-    parameters = get_parameters(root)
+    parameters,is_all_defined = get_parameters(root,kwargs)
     for p in root.findall("parameter"):
         root.remove(p)
 
 
-    if check_parameters(parameters,kwargs):
+    prompt_root = root.find(".//prompt_page")
+    prompt_page = generate_prompt_page(prompt_root,parameters)
+
+    if not is_all_defined:
+        for d in root.findall("dataset"):
+            root.remove(d)
+        for rp in root.iter("report_page"):
+            rp.getparent().remove(rp)
+        return etree.tounicode(root,method="html")
+
+    if is_all_defined:
         #get all data set
         for d in root.findall("dataset"):
-            name,data = get_data_from_dataset(d,**kwargs)
-
+            name,data = get_data_from_dataset(d,kwargs)
             variables[name] = data
-
             #delete dataset elements for display
             root.remove(d)
 
         #fill all dataset data
         for dsr in root.iter("dsr"):
-            r_text = fill_parameters(dsr.text, **kwargs)
+            r_text = fill_parameters(dsr.text, kwargs)
             pd_name = r_text.split(".")[0]
             if pd_name in variables.keys() :
                 if isinstance(eval(pd_name),pd.DataFrame):
@@ -61,28 +69,28 @@ def render_report(report_path,**kwargs):
                 raise Exception("the dataset reference {r_text} is not defined !".format(r_text=r_text))
 
         #TODO parse all table elements
-        for t in root.findall("table"):
+        for t in root.iter("table"):
             pass
 
         #parse all chart elements
         for c in root.iter("chart"):
             #get chart type
             e_type = c.find("type")
-            type = fill_parameters(e_type.text, **kwargs)
+            type = fill_parameters(e_type.text, kwargs)
             c.remove(e_type)
 
             #get template name
             e_tempalte = c.find("template")
-            template_name = fill_parameters(e_tempalte.text, **kwargs)
+            template_name = fill_parameters(e_tempalte.text, kwargs)
             c.remove(e_tempalte)
 
             #set parameter dict
             sub_parameters = dict()
             for sp in c.findall("parameter"):
                 #get parameter name
-                p_name = fill_parameters(sp.get("name"), **kwargs)
+                p_name = fill_parameters(sp.get("name"), kwargs)
                 #get parameter content after parameter replacement
-                p_text = fill_parameters(sp.text, **kwargs)
+                p_text = fill_parameters(sp.text, kwargs)
                 sub_parameters[p_name]=p_text
                 c.remove(sp)
 
@@ -104,7 +112,7 @@ def render_report(report_path,**kwargs):
 
 
 
-def get_data_from_dataset(dataset,**kwargs):
+def get_data_from_dataset(dataset,kwargs):
     """
     get data from dataset definition
     :param dataset: an xml elemen type data which should defined as below：
@@ -123,22 +131,22 @@ def get_data_from_dataset(dataset,**kwargs):
     """
 
     if isinstance(dataset,etree._Element):
-        name = fill_parameters(dataset.find("name").text, **kwargs)
-        type = fill_parameters(dataset.find("type").text, **kwargs)
-        value = fill_parameters(dataset.find("value").text, **kwargs)
+        name = fill_parameters(dataset.find("name").text, kwargs)
+        type = fill_parameters(dataset.find("type").text, kwargs)
+        value = fill_parameters(dataset.find("value").text, kwargs)
 
 
         #check dataset type and generate data into pd.DataFrame type
         if type == 'sql':
             #if type is sql then read data from a database identified by the <engine></engine> element
-            engine_str = fill_parameters(dataset.find("engine").text, **kwargs)
+            engine_str = fill_parameters(dataset.find("engine").text, kwargs)
             sql = value
             return name,get_data_from_sql(engine_str,sql)#{name:get_data_from_sql(engine_str,sql)}
 
         elif type == 'list':
             #if type is list then return a python list
             list_str = value
-            sep = fill_parameters(dataset.find("sep").text, **kwargs)
+            sep = fill_parameters(dataset.find("sep").text, kwargs)
             sep = sep if sep else ","
             return name,get_data_from_list(list_str,sep)#{name:get_data_from_list(list_str,sep)}
 
@@ -170,36 +178,60 @@ def get_data_from_file(file,filetype):
     return "need development"
 
 
-def check_parameters(p_dict,para_dict):
-    '''
-    check whether the given parameter sets is equal to the parameter set defined in *.etmp files
-    :param p_dict: parameter sets defined in *.etmp
-    :param para_dict: parmeter sets given by function caller
-    :return: True if equal
-    '''
-    p_list = list(p_dict.keys())
-    d = list(para_dict.keys())
+# def check_parameters(p_dict,para_dict):
+#     '''
+#     check whether the given parameter sets is equal to the parameter set defined in *.etmp files
+#     :param p_dict: parameter sets defined in *.etmp
+#     :param para_dict: parmeter sets given by function caller
+#     :return: True if equal
+#     '''
+#
+#     p_list = list(p_dict.keys())
+#     d = list(para_dict.keys())
+#
+#     p_list.sort()
+#     d.sort()
+#
+#     if p_list == d :
+#         return True
+#     else:
+#         return False
 
-    p_list.sort()
-    d.sort()
 
-    if p_list == d :
-        return True
-    else:
-        return False
-
-
-def get_parameters(root):
+def get_parameters(root,kwargs):
     # dom = xml.dom.minidom.parse(file)
     # root = dom.documentElement
+
+    is_all_defined = True
     p_list = root.findall('parameter')
-    p_dict = {p.find('name').text:
-                 p.find('desc').text
-             for p in p_list}
-    return p_dict
+    p_dict = {}
+    for p in p_list:
+        type = p.find('type').text
+        name = p.find('name').text
+        value = ""
+        if name in kwargs.keys():
+            value = kwargs.get(name)
+        else:
+            is_all_defined = False
+        if type == 'text':
+            input = etree.Element('input',attrib={'type':'text',
+                                                  'name':name,
+                                                  'class':"form-control",
+                                                  'placeholder':p.find('desc').text,
+                                                  'value':value})
+            p_dict[name] = input
+        elif type == 'options':
+            pass
+        elif type == 'boolean':
+            pass
+
+    # p_dict = {p.find('name').text:
+    #               [p.find('desc').text,p.find('type').text]
+    #          for p in p_list}
+    return p_dict,is_all_defined
 
 
-def fill_parameters(org_value, **kwargs):
+def fill_parameters(org_value, kwargs):
     value = value_to_string(org_value)
     try:
         org_value_t = string.Template(value)
@@ -216,3 +248,26 @@ def value_to_string(value):
     elif isinstance(value,list):
         value = value.__repr__()
     return value
+
+def generate_prompt_page(prompt_page,parameters):
+    prompt_page.tag = "form"
+    prompt_page.set("method","GET")
+    prompt_page.set("action","/")
+    prompt_page.set("class","navbar-form navbar-left")
+    prompt_list = [ p for p in prompt_page.iterfind(".//prompt")]
+    for one_prompt in prompt_list:
+        one_prompt.tag="span"
+        one_prompt.append( parameters[one_prompt.text])
+        one_prompt.text=parameters[one_prompt.text].get("placeholder") + " "
+    submit_btn = [ submit for submit in prompt_page.iterfind(".//submit")][0]
+    submit_text = submit_btn.text
+    submit_btn.tag = 'button'
+    submit_btn.set('type','submit')
+    submit_btn.set('class',"btn btn-default")
+    submit_btn.text=submit_text
+
+    prompt_page.append(submit_btn)
+    return prompt_page
+
+def generate_dateset(root,is_all_defined):
+    pass
